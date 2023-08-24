@@ -1,0 +1,14 @@
+using System.Linq;
+public class Solution {
+    public long[] solution(int x, int n) {
+        long[] answer = new long[n];
+        long a = (long)x;
+        long sum = a;
+        answer[0] = a;
+        for( int i = 1; i < n ; i++){
+            sum += a;
+            answer[i] = sum;
+        }
+        return answer;
+    }
+}
