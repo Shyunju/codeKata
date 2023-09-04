@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 public class Solution {
     public int solution(string t, string p) {
