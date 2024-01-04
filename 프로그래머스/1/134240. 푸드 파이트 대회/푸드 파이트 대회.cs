@@ -4,8 +4,7 @@ public class Solution {
     public string solution(int[] food) {
         string answer = "";
         for( int i = 1; i< food.Length; i++){
-            for(int j = food[i] / 2; j>=0 ; j--){
-                if( j == 0)  break;
+            for(int j = food[i] / 2; j>0 ; j--){
                 answer += i.ToString();
             }
         }
