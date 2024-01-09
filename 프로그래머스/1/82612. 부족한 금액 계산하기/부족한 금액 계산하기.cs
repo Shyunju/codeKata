@@ -8,11 +8,7 @@ class Solution
         for(int i = 0; i <= count; i++){
             sum += price * i;
         }
-        if( sum > money){
-            sum -= money;
-        }else{
-            return 0;
-        }
-        return sum;
+        
+        return (sum > money) ? sum -= money : 0;
     }
 }
