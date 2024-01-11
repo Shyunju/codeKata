@@ -1,19 +1,22 @@
 using System;
 public class Solution {
-    public long solution(int n) {
-        long answer = 0;
-        long[] count = new long[n+1];
+    public int solution(int n) {
+        int answer = 0;
+        if(n <= 3)
+            return n;
+        int dp1 = 2;
+        int dp2 = 3;
         
-        for(int i = 1; i <= n ; i++)
+        
+        while(n > 3)
         {
-            if(i <= 2)
-            {
-                count[i] = i;
-                continue;
-            }
-            count[i] = (count[i-1] + count[i-2]) % 1234567;
+            answer = (dp1 + dp2) % 1234567;
+            
+            dp1 = dp2;
+            dp2 = answer;
+            --n;
         }
         
-        return answer = count[n];
+        return answer;
     }
 }
