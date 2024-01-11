@@ -1,18 +1,19 @@
 using System;
-
+using System.Collections.Generic;
 public class Solution {
     public int[] solution(string s) {
         int[] answer = new int[s.Length];
-        int idx = -1;
-        for(int i =0 ; i < s.Length ; i++){
-            idx =-1;
-            for(int j = i-1; j >= 0; j--){
-                if( s[i] == s[j]){
-                    idx = i -j;
-                    break;
-                }
+        Dictionary<char, int> dic = new Dictionary<char, int>();
+        
+        for( int i = 0; i < s.Length ; i++)
+        {
+            if(!dic.ContainsKey(s[i])){
+                answer[i] = -1;
+                dic.Add(s[i], i);
+            }else{
+                answer[i] = i - dic[s[i]];
+                dic[s[i]] = i;
             }
-            answer[i] = idx;
         }
         return answer;
     }
