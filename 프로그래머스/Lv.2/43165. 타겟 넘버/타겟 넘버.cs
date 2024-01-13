@@ -2,33 +2,23 @@
 
     public class Solution
     {
-        public int count = 0;
-
         public int solution(int[] numbers, int target)
         {
-            Function(numbers, target, -1);
-
-            return count;
+            int answer = 0;
+            return Dfs(numbers, target, 0, 0);
         }
-
-        public void Function(int[] numbers, int target, int index)
+        
+        static int Dfs(int[] arr, int target, int idx, int num)
         {
-            index++;
-            
-            if (numbers.Length == index)
+            if(idx == arr.Length)
             {
-                int total = 0;
-                foreach (int num in numbers)
-                    total += num;
-
-                if (total == target)
-                    count++;
-
-                return;
+                if(target == num) return 1;
+                else return 0;
+            }else
+            {
+                return Dfs(arr, target, idx+1, num + arr[idx]) + Dfs(arr, target, idx+1, num - arr[idx]);
             }
-            
-            Function(numbers, target, index);
-            numbers[index] *= -1;
-            Function(numbers, target, index);
         }
+
+        
     }
