@@ -1,14 +1,10 @@
 using System;
-using System.Collections.Generic;
 
 public class Solution {
     public int[] solution(int n) {
-        List<int> answer = new List<int>();
-        for(int i = 1 ; i <= n ; i++)
-        {
-            if(i % 2 == 1)
-                answer.Add(i);
-        }
-        return answer.ToArray();
+        int[] answer = new int[(n + 1) / 2];
+        for (int i = 0; i < (n + 1) / 2; i++)
+            answer[i] = (i << 1) + 1;
+        return answer;
     }
 }
