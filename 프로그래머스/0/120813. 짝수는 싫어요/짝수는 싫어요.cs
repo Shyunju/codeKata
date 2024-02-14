@@ -1,9 +1,18 @@
 using System;
-using System.Linq;
+using System.Collections.Generic;
 
-public class Solution {
-    public int[] solution(int n) {
-        int[] answer = Enumerable.Range(1, n).Where(x => x % 2 == 1).ToArray();
-        return answer;
+public class Solution 
+{
+    public int[] solution(int n) 
+    {
+        List<int> answer = new List<int>();
+
+        for(int i=1; i<=n; i++)
+        {
+            if(i % 2 == 1)
+                answer.Add(i);
+        }
+
+        return answer.ToArray();
     }
 }
