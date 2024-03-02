@@ -1,12 +1,13 @@
 using System;
+using System.Text;
 
 public class Solution {
     public string solution(string my_string, int num1, int num2) {
         string answer = "";
-        char[] result = my_string.ToCharArray();
-        char tmp = result[num1];
-        result[num1] = result[num2];
-        result[num2] = tmp;
-        return answer = String.Join("", result);
+        StringBuilder stb=new StringBuilder(my_string);
+        stb[num1]=my_string[num2];
+        stb[num2]=my_string[num1];
+        answer=stb.ToString();
+        return answer;
     }
 }
