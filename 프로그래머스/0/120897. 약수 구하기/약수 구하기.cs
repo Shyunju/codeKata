@@ -1,13 +1,9 @@
 using System;
-using System.Collections.Generic;
+using System.Linq;
+
 public class Solution {
     public int[] solution(int n) {
-        List<int> answer = new List<int>();
-        for(int i = 1; i <=n ; i++)
-        {
-            if(n % i == 0)
-                answer.Add(i);
-        }
-        return answer.ToArray();
+        int[] answer = Enumerable.Range(1, n).Where(x => n % x == 0).ToArray();
+        return answer;
     }
 }
