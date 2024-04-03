@@ -1,13 +1,7 @@
 using System;
-using System.Text;
+using System.Linq;
 public class Solution {
     public string solution(string my_string) {
-        StringBuilder sb = new StringBuilder();
-        for(int i = my_string.Length -1; i >= 0; i--)
-        {
-            sb.Append(my_string[i]);
-        }
-        string answer = sb.ToString();
-        return answer;
+        return new string(my_string.Reverse().ToArray());
     }
 }
