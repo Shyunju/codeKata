@@ -10,10 +10,8 @@ public class Solution {
         {
             if(dic.ContainsKey(clothes[i, 1]))
                 dic[clothes[i, 1]]++;
-            else{
-                dic.Add(clothes[i, 1], 1);
-            }
-                
+            else
+                dic.Add(clothes[i, 1], 1);  
         }
         foreach(KeyValuePair<string, int> kv in dic)
         {
