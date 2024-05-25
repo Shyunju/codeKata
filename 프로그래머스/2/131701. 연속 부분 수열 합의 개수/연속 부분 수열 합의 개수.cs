@@ -1,30 +1,26 @@
 using System;
 using System.Collections.Generic;
-
 public class Solution {
     public int solution(int[] elements) {
-        int answer = 0;
-        List<int> answers = new List<int>();
-        int[] exist = new int[1000000];
+        int n = elements.Length;
+        HashSet<int> sum = new HashSet<int>();
         
-        for (int i = 1; i <= elements.Length; i++) {
-            for (int j = 0; j < elements.Length; j++) {
-                int sum = 0;
-                for (int k = 0; k < i; k++) {
-                    if (j + k >= elements.Length) {
-                        sum += elements[j + k - elements.Length];
-                    }
-                    else
-                        sum += elements[j + k];
-                }
-                if (exist[sum] == 0) {
-                    answers.Add(sum);
-                    exist[sum] = 1;
-                }
-            }
+        int[,] dp = new int[n, n+1];
+        
+        for(int i = 0; i < n; i++)
+        {
+            dp[i,1] = elements[i];
+            sum.Add(elements[i]);
         }
         
-        answer = answers.Count;
-        return answer;
+        for(int i = 2; i<= n; i++)
+        {
+            for(int j=0; j < n; j++)
+            {
+                dp[j,i] = dp[j, i-1] + elements[(i+j-1)%n];
+                sum.Add(dp[j,i]);
+            }
+        }
+        return sum.Count;
     }
 }
