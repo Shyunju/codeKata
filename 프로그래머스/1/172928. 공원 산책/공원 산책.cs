@@ -1,84 +1,47 @@
 using System;
 
-public class Solution
-{
-    int maxX = 0;
-    int maxY = 0;
-
-    public int[] solution(string[] park, string[] routes)
-    {
-        maxX = park[0].Length;
-        maxY = park.Length;
-
+public class Solution {
+    public int[] solution(string[] park, string[] routes) {
         int[] answer = new int[2];
-
-        int x = 0;
-        int y = 0;
-
-        for (int i = 0; i < park.Length; i++)
-        {
-            int index = park[i].IndexOf("S");
-            if (index != -1)
-            {
-                x = index;
-                y = i;
-                break;
+        
+        int[] dy = new int[]{-1, 1, 0, 0};
+        int[] dx = new int[]{0, 0, -1, 1};
+        
+        char[] direction = new char[]{'N', 'S', 'W', 'E'};
+        
+        int height = park.Length;
+        int width = park[0].Length;
+        
+        for(int i = 0; i <height; i++){
+            for(int j = 0; j < width; j++){
+                if(park[i][j] == 'S'){
+                    answer[0] = i;
+                    answer[1] = j;
+                }
             }
         }
-
-        foreach (string route in routes)
-        {
-            string[] routeInfo = route.Split(" ");
-
-            string dir = routeInfo[0];
-            int movePos = int.Parse(routeInfo[1]);
-
-            int nextY = y;
-            int nextX = x;
-            bool isCheck = true;
-
-            for (int i = 0; i < movePos; i++)
-            {
-                switch (dir)
-                {
-                    case "N":
-                        nextY--;
-                        break;
-                    case "S":
-                        nextY++;
-                        break;
-                    case "W":
-                        nextX--;
-                        break;
-                    case "E":
-                        nextX++;
-                        break;
-                }
-
-                if (IsOderCheck(park, nextY, nextX) == false)
-                {
-                    isCheck = false;
+        foreach(string i in routes){
+            int dir = Array.IndexOf(direction, i[0]);
+            int count = int.Parse(i[2].ToString());
+            int y = answer[0];
+            int x = answer[1];
+            for(int j = 1; j <= count; j++){
+                if(y + dy[dir] < 0 || y + dy[dir] >= height || x + dx[dir] < 0 || x + dx[dir] >= width){
+                    y = answer[0];
+                    x = answer[1];
                     break;
                 }
+                if(park[y + dy[dir]][x + dx[dir]] == 'X'){
+                    y = answer[0];
+                    x = answer[1];
+                    break;
+                }
+                y += dy[dir];
+                x += dx[dir];
             }
-            if (isCheck)
-            {
-                x = nextX;
-                y = nextY;
-            }
+            answer[0] = y;
+            answer[1] = x;
         }
-        return new int[2] { y, x };
-    }
-
-    bool IsOderCheck(string[] park, int y, int x)
-    {
-        if (y < 0 || y >= maxY)
-            return false;
-        if (x < 0 || x >= maxX)
-            return false;
-        if (park[y][x] == 'X')
-            return false;
-
-        return true;
+        return answer;
     }
 }
