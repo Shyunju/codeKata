@@ -1,21 +1,44 @@
 using System;
-
+using System.Linq;
 public class Solution {
     public int solution(string name) {
-        int answer = 0;
-        int n = name.Length;
-        int leftOrRight = name.Length - 1;
-        for (int i = 0; i < n; i++)
-        {
-            int next = i + 1;
-            char target = name[i];
-            if (target <= 'N') answer += target - 'A'; //첫 알파벳이 A~N
-            else answer += 'Z' - target + 1; //첫 알파벳이  O~Z                
-                while (next < n && name[next] == 'A') 
-                    next++;
-            leftOrRight = Math.Min(leftOrRight, i + n - next + Math.Min(i, n - next));
-        }
-        answer += leftOrRight;
+        int answer = int.MaxValue;
+        bool[] visited = name.Select(s=> s== 'A').ToArray();
+        
+        DFS(name, visited, 0, 0, ref answer);
         return answer;
+    }
+    public void DFS(string name, bool[] visited, int cur, int count, ref int answer){
+        if(!visited[cur]){
+            int up = name[cur] - 'A';
+            int down = 'Z'-'A' -up +1;
+            count += Math.Min(up, down);
+            visited[cur] = true;
+        }
+        if(visited.Count(c=>!c) ==0){
+            if(count < answer)
+                answer=count;
+            return;
+        }
+        
+        int left = cur;
+        int leftCount = 0;
+        while(visited[left]){
+            leftCount++;
+            left = left >0 ? left -1 : (left + name.Length -1) % name.Length;
+        }
+        
+        int right = cur;
+        int rightCount = 0;
+        while(visited[right]){
+            rightCount++;
+            right = right < name.Length -1? right + 1 : (right +1) % name.Length;
+        }
+        
+        DFS(name, visited, left, count + leftCount, ref answer);
+        visited[left] = false;
+        
+        DFS(name, visited, right, count + rightCount, ref answer);
+        visited[right] = false;
     }
 }
