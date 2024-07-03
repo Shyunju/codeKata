@@ -1,31 +1,26 @@
 using System;
-using System.Collections.Generic;
-public class Solution
-{
-    public int solution(string skill, string[] skill_trees)
-    {
-        int answer = skill_trees.Length;
 
-        char[] skills = skill.ToCharArray();
-        for (int i = 0; i < skill_trees.Length; i++)
-        {
-            int min = skill_trees[i].IndexOf(skills[0]);
-            for (int j = 1; j < skills.Length; j++)
-            {
-                int curSkill = skill_trees[i].IndexOf(skills[j]);
-
-                if (curSkill < min && curSkill != -1)
-                {
-                    answer--;
+public class Solution {
+    public int solution(string skill, string[] skill_trees) {
+        int answer = 0;
+        int now = 0;
+        bool possible = true;
+        foreach(string i in skill_trees){
+            now = 0;
+            possible = true;
+            for(int j= 0; j <i.Length; j++){
+                int idx = skill.IndexOf(i[j]);
+                if(idx == -1)
+                    continue;
+                if(idx == now){
+                    now++;
+                    continue;
+                }else{
+                    possible = false;
                     break;
                 }
-                else if (min == -1 && curSkill != -1)
-                {
-                    answer--;
-                    break;
-                }
-                min = curSkill;
             }
+            answer += possible ? 1 : 0;
         }
         return answer;
     }
