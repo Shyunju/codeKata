@@ -5,7 +5,7 @@ public class Solution {
     {
         int a = GetMaxValue(arrayA, arrayB);
         int b = GetMaxValue(arrayB, arrayA);
-        return a > b ? a : b;
+        return Math.Max(a, b);
     }
 
     private int GetMaxValue(int[] my, int[] other)
