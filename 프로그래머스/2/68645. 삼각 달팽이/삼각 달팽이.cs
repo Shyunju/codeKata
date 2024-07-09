@@ -1,51 +1,34 @@
 using System;
-using System.Collections.Generic;
 
 public class Solution {
     public int[] solution(int n) {
-        
-        List<List<int>> list = new List<List<int>>();
-        
-        for (int i = 0; i < n; i++)
-        {
-            list.Add(new List<int>());
-        }
+        int[] answer = new int[(n*(n+1))/2]; //배열의 총크기
+        int[,] temp = new int[n,n];         //2차원 배열
 
-        NTriangle(ref list, 0, 1, n);
+        int x = -1, y = 0;
+        int num = 1;
 
-        List<int> newList = new List<int>();
-
-        for (int i = 0; i < list.Count; i++)
-        {
-            for (int j = 0; j < list[i].Count; j++)
-            {
-                newList.Add(list[i][j]);
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) { 	
+                if (i % 3 == 0) {         //왼쪽대각선으로 진행시
+                    x++;
+                } else if (i % 3 == 1) {  //오른쪽으로 진행시
+                    y++;
+                } else if (i % 3 == 2) {  //오른쪽 대각선 진행시
+                    x--;
+                    y--;
+                }
+                temp[x,y] = num++;
             }
         }
-        
-        return newList.ToArray();
-    }
-    
-    public void NTriangle(ref List<List<int>> list, int depth, int startNumber, int n)
-    {
-        if (n <= 0) return;
-
-        for (int i = 0; i < n; i++)
-        {
-            list[i + (depth * 2)].Insert(depth, startNumber++);
+        int k = 0;
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++) {
+                if(temp[i,j] == 0) 
+                	break;
+                answer[k++] = temp[i,j];
+            }
         }
-
-        for (int i = 0; i < n - 1; i++)
-        {
-            var index = list[n - 1 + (depth * 2)].Count;
-            list[n - 1 + (depth * 2)].Insert(index - depth, startNumber++);
-        }
-
-        for (int i = 0; i < n - 2; i++)
-        {
-            list[n - (i + 2) + (depth * 2)].Insert(1 + depth, startNumber++);
-        }
-
-        NTriangle(ref list, depth + 1, startNumber, n - 3);
+        return answer;
     }
 }
