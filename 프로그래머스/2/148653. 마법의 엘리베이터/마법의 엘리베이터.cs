@@ -2,18 +2,21 @@ using System;
 
 public class Solution {
     public int solution(int storey) {
-        int answer = 0;
-        int r;
-        while(storey > 0)
-        {
-            storey = Math.DivRem(storey, 10, out r);
-            if(r > 5 || (r == 5 && (storey % 10 >= 5)))
-            {
-                answer += 10 - r;
-                storey += 1;       
-            }
-            else answer += r;
+        int minValue = int.MaxValue;
+        string str = storey.ToString();
+        
+        DFS(str, str.Length-1, 0, 0, ref minValue);
+        return minValue;
+    }
+    public void DFS(string str, int i, int count, int reversed, ref int minValue){
+        if(i == -1){
+            count += reversed;
+            minValue = Math.Min(count, minValue);
+            return;
         }
-        return answer;
+        
+        int num = str[i] - '0' + reversed;
+        DFS(str, i-1, count+num, 0, ref minValue);
+        DFS(str, i-1, count + 10 - num, 1, ref minValue);
     }
 }
