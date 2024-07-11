@@ -1,65 +1,58 @@
 using System;
 using System.Collections.Generic;
+
 public class Solution {
-    public int solution(string[] maps) 
-    {
-        var startPoint = FindChar(maps, 'S');
-
-        int dist = MoveTo(maps, 'L', startPoint, out var leverPoint);
-        if(dist == -1)
+    public int solution(string[] maps) {
+        
+        var startPiont = FindPoint(maps, 'S');
+        int StoL = Move(maps, 'L', startPiont, out var leverPoint);
+        if(StoL == -1)
             return -1;
-        else
-        {
-            int dist2 = MoveTo(maps, 'E', leverPoint, out var _);
-            return dist2 == -1 ? -1 : dist + dist2;
+        else{
+            int LtoE = Move(maps, 'E', leverPoint, out var exit);
+            return LtoE == -1 ? -1 : StoL + LtoE;
         }
+        
+        
     }
-
-    private (int, int) FindChar(string[] maps, char c)
-    {
-        for(int y = 0; y < maps.Length; ++y)
-        {
+    public (int, int) FindPoint(string[] maps, char c){
+        for(int y = 0; y <maps.Length; y++){
             int x = maps[y].IndexOf(c);
-            if(x != -1)
+            if( x != -1)
                 return (y, x);
         }
         return (-1, -1);
     }
-
-    private int MoveTo(string[] maps, char target, (int y, int x) start, out (int, int) end)
-    {
-        int[] dy = { 0, 0, -1, 1 };
-        int[] dx = { -1, 1, 0, 0 };
-
+    
+    public int Move(string[] maps, char target, (int, int) start, out (int, int) end){
+        
         var dist = new int[maps.Length, maps[0].Length];
-        var queue = new Queue<(int, int)>();
-        queue.Enqueue(start);
-
-        while(queue.Count > 0)
-        {
-            (int y, int x) cur = queue.Dequeue();
-            if(maps[cur.y][cur.x] == target) // 도달
-            {
+        
+        int[] dy = {0, 0, -1, 1};
+        int[] dx = {-1, 1, 0, 0};
+        
+        var q = new Queue<(int, int)>();
+        q.Enqueue(start);
+        
+        while(q.Count > 0){
+            (int y, int x) cur = q.Dequeue();
+            if(maps[cur.y][cur.x] == target){
                 end = cur;
                 return dist[cur.y, cur.x];
             }
-
-            for(int i = 0; i < 4; ++i)
-            {
-                int moveToY = cur.y + dy[i];
-                int moveToX = cur.x + dx[i];
-
-                if(moveToY >= maps.Length || moveToY < 0) continue;
-                if(moveToX >= maps[0].Length || moveToX < 0) continue;
-
-                if(maps[moveToY][moveToX] == 'X') continue;
-                if(dist[moveToY, moveToX] != 0) continue;
-
-                queue.Enqueue((moveToY, moveToX));
-                dist[moveToY, moveToX] = dist[cur.y, cur.x] + 1;
+            for(int i = 0; i < 4; i++){
+                int nextY = cur.y + dy[i];
+                int nextX = cur.x + dx[i];
+                
+                if(nextY < 0 || nextY >= maps.Length || nextX < 0 || nextX >= maps[0].Length) continue;
+                if(maps[nextY][nextX] == 'X') continue;
+                
+                if(dist[nextY, nextX] != 0) continue;
+                
+                dist[nextY, nextX] = dist[cur.y, cur.x] +1;
+                q.Enqueue((nextY, nextX));
             }
         }
-
         end = (-1, -1);
         return -1;
     }
