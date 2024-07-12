@@ -5,9 +5,8 @@ using System.Linq;
 public class Solution {
     public int[] solution(int[] fees, string[] records) {
         
-        List<string> newRecords = new List<string>();
         Dictionary<string, List<string>> dicList = new Dictionary<string, List<string>>();
-        List<int> answerList = new List<int>();
+        List<int> answer = new List<int>();
 
         for (var i=0; i< records.Length; i++)
         {
@@ -15,9 +14,7 @@ public class Solution {
             var list = records.Where(w => w.Substring(6, 4) == tmp[1]).OrderBy(o => o);
 
             if(!dicList.ContainsKey(tmp[1]))
-            {
                 dicList.Add(tmp[1], list.ToList());
-            }
         }
 
         var result = dicList.OrderBy(o => o.Key);
@@ -29,49 +26,42 @@ public class Solution {
 
             for (var i=0;   i< dic.Value.Count; i++ )
             {
-                var time = dic.Value[i].Split(' ')[0];
-                var gb = dic.Value[i].Split(' ')[2];
+                var values = dic.Value[i].Split(' ');
+                string time = values[0];
+                string gb = values[2];
 
                 if (gb == "IN")
-                {
-                    inTime = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd") + " " + time);
-                }
+                    inTime = getTime(time);
                 else
                 {
-                    outTime = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd") + " " + time);
+                    outTime = getTime(time);
 
                     TimeSpan dateDiff = outTime - inTime;
                     totalMinute += Convert.ToInt32(dateDiff.TotalMinutes);
                 }
             }
 
-            // 출차기록이 없으면 23:59 분 출차로 기록
             if (dic.Value.Count % 2 != 0)
             {
-                outTime = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd") + " 23:59");
+                outTime = getTime("23:59");
 
-                TimeSpan dateDiff2 = outTime - inTime;
-                totalMinute += Convert.ToInt32(dateDiff2.TotalMinutes);
+                TimeSpan dateDiff = outTime - inTime;
+                totalMinute += Convert.ToInt32(dateDiff.TotalMinutes);
             }
 
-            double parkingPrice = 0;
+            double parkingPrice = fees[1];
 
-            if (totalMinute <= fees[0])
-            {
-                parkingPrice = fees[1];
-            }
-            else
-            {
-                parkingPrice = fees[1] + Math.Ceiling((totalMinute - fees[0]) / fees[2]) * fees[3];
-            }
-
-            answerList.Add(Convert.ToInt32(parkingPrice));
+            if(totalMinute > fees[0])
+                parkingPrice += Math.Ceiling((totalMinute - fees[0]) / fees[2]) * fees[3];
+            
+            answer.Add(Convert.ToInt32(parkingPrice));
 
             totalMinute = 0;
         }
 
-        var answer = answerList.ToArray();
-
-        return answer;
+        return answer.ToArray();
+    }
+    private DateTime getTime(string time){
+        return Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd") + " " + time);
     }
 }
