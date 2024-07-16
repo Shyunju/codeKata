@@ -1,49 +1,29 @@
 using System;
-
+using System.Linq;
+//using System.Collections.Generic;
 class Solution
 {
     public int solution(int N, int[,] road, int K)
     {
         int answer = 0;
-        int[] result = new int[N+1];
-        for (int i = 0; i < result.Length; i++)
-        {
-            result[i] = 999999;
-        }
-        result[1] = 0;
-
-        for (int k = 0; k < N; k++)
-        {
-            for (int i = 1; i <= N; i++)
-            {
-                for (int j = 0; j < road.GetLength(0); j++)
-                {
-                    if(road[j,0] == i)
-                    {
-                        if(result[road[j,1]]>result[road[j,0]]+road[j,2])
-                        {
-                            result[road[j,1]] =result[road[j, 0]] + road[j, 2];
-                        }
-                        else   result[road[j, 1]] = result[road[j, 1]];
-                    }
-                    else if(road[j,1] == i)
-                    {
-                        if(result[road[j,0]]>result[road[j,1]]+road[j,2])
-                        {
-                            result[road[j,0]] =result[road[j, 1]] + road[j, 2];
-                        }
-                        else result[road[j,0]] = result[road[j, 0]];
-                    }
+        int[] path = Enumerable.Repeat(int.MaxValue, N+1).ToArray();
+        path[1] = 0;
+        
+        for(int repeat = 0; repeat < N-1; repeat++){
+            for(int target = 1; target < N+1; target++){
+                for(int r = 0; r < road.GetLength(0); r++){
+                    
+                    int a= road[r,0];
+                    int b = road[r,1];
+                    int dist = road[r, 2];
+                    
+                    if(a == target && path[a] != int.MaxValue)
+                        path[b] = Math.Min(path[b], path[a] + dist);
+                    else if(b == target && path[b] != int.MaxValue)
+                        path[a] = Math.Min(path[a], path[b] + dist);
                 }
             }
         }
-        for (int i = 1; i < result.Length; i++)
-        {
-            if (result[i] <= K)
-            {
-                answer++;
-            }
-        }
-        return answer;
+        return answer = path.Count(c => c <= K);
     }
 }
