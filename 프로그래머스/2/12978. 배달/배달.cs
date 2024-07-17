@@ -1,58 +1,49 @@
 using System;
-using System.Linq;
+
 class Solution
 {
     public int solution(int N, int[,] road, int K)
     {
-        int[,] map = new int[N, N];
-        for(int i = 0; i < N; i++)
+        int answer = 0;
+        int[] result = new int[N+1];
+        for (int i = 0; i < result.Length; i++)
         {
-            for(int k = 0; k < N; k++)
-                map[i, k] = int.MaxValue;
+            result[i] = 999999;
         }
-        for(int i = 0; i < road.GetLength(0); i++)
+        result[1] = 0;
+
+        for (int k = 0; k < N; k++)
         {
-            int a = road[i, 0] - 1;
-            int b = road[i, 1] - 1;
-            int dist = road[i, 2];
-
-            if(dist < map[a, b])
-                map[a, b] = map[b, a] = dist;
-        }
-
-        var times = new int[N];
-        var visit = new bool[N];
-        for(int i = 0; i < N; i++)
-            times[i] = map[0, i];
-
-        times[0] = 0; 
-        visit[0] = true; 
-
-        for(int repeat = 0; repeat < N - 1; repeat++)
-        {
-            int now = -1;
-            int min = int.MaxValue;
-            for(int j = 0; j < N; j++)
+            for (int i = 1; i <= N; i++)
             {
-                if(visit[j]) continue;
-                if(times[j] == int.MaxValue) continue;
-                if(times[j] >= min) continue;
-
-                min = times[j];
-                now = j;
-            }
-
-            visit[now] = true;
-
-            for(int k = 0; k < N; k++)
-            {
-                if(visit[k]) continue;
-                if(map[now, k] == int.MaxValue) continue;
-                if(times[k] > times[now] + map[now, k]) 
-                    times[k] = times[now] + map[now, k];
+                for (int j = 0; j < road.GetLength(0); j++)
+                {
+                    if(road[j,0] == i)
+                    {
+                        if(result[road[j,1]]>result[road[j,0]]+road[j,2])
+                        {
+                            result[road[j,1]] =result[road[j, 0]] + road[j, 2];
+                        }
+                        else   result[road[j, 1]] = result[road[j, 1]];
+                    }
+                    else if(road[j,1] == i)
+                    {
+                        if(result[road[j,0]]>result[road[j,1]]+road[j,2])
+                        {
+                            result[road[j,0]] =result[road[j, 1]] + road[j, 2];
+                        }
+                        else result[road[j,0]] = result[road[j, 0]];
+                    }
+                }
             }
         }
-
-        return times.Count(c => c <= K);
+        for (int i = 1; i < result.Length; i++)
+        {
+            if (result[i] <= K)
+            {
+                answer++;
+            }
+        }
+        return answer;
     }
 }
