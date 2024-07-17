@@ -1,29 +1,58 @@
 using System;
 using System.Linq;
-//using System.Collections.Generic;
 class Solution
 {
     public int solution(int N, int[,] road, int K)
     {
-        int answer = 0;
-        int[] path = Enumerable.Repeat(int.MaxValue, N+1).ToArray();
-        path[1] = 0;
-        
-        for(int repeat = 0; repeat < N-1; repeat++){
-            for(int target = 1; target < N+1; target++){
-                for(int r = 0; r < road.GetLength(0); r++){
-                    
-                    int a= road[r,0];
-                    int b = road[r,1];
-                    int dist = road[r, 2];
-                    
-                    if(a == target && path[a] != int.MaxValue)
-                        path[b] = Math.Min(path[b], path[a] + dist);
-                    else if(b == target && path[b] != int.MaxValue)
-                        path[a] = Math.Min(path[a], path[b] + dist);
-                }
+        int[,] map = new int[N, N];
+        for(int i = 0; i < N; i++)
+        {
+            for(int k = 0; k < N; k++)
+                map[i, k] = int.MaxValue;
+        }
+        for(int i = 0; i < road.GetLength(0); i++)
+        {
+            int a = road[i, 0] - 1;
+            int b = road[i, 1] - 1;
+            int dist = road[i, 2];
+
+            if(dist < map[a, b])
+                map[a, b] = map[b, a] = dist;
+        }
+
+        var times = new int[N];
+        var visit = new bool[N];
+        for(int i = 0; i < N; i++)
+            times[i] = map[0, i];
+
+        times[0] = 0; 
+        visit[0] = true; 
+
+        for(int repeat = 0; repeat < N - 1; repeat++)
+        {
+            int now = -1;
+            int min = int.MaxValue;
+            for(int j = 0; j < N; j++)
+            {
+                if(visit[j]) continue;
+                if(times[j] == int.MaxValue) continue;
+                if(times[j] >= min) continue;
+
+                min = times[j];
+                now = j;
+            }
+
+            visit[now] = true;
+
+            for(int k = 0; k < N; k++)
+            {
+                if(visit[k]) continue;
+                if(map[now, k] == int.MaxValue) continue;
+                if(times[k] > times[now] + map[now, k]) 
+                    times[k] = times[now] + map[now, k];
             }
         }
-        return answer = path.Count(c => c <= K);
+
+        return times.Count(c => c <= K);
     }
 }
