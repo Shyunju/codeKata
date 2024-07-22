@@ -2,31 +2,27 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 public class Solution {
-    public int solution(int[,] targets) 
-    {
-        var list = new List<(int, int)>();
-        for(int i = 0; i < targets.GetLength(0); ++i)
-            list.Add((targets[i, 0], targets[i, 1]));
-
-        list = list.OrderBy(o => o.Item1).ToList();
-
+    public int solution(int[,] targets) {
         int answer = 0;
+        
+        var area = new List<(int, int)>();
+        for(int i = 0; i < targets.GetLength(0); i++){
+            area.Add((targets[i,0], targets[i,1]));
+        }
+        area = area.OrderBy(o => o.Item1).ToList();
+        
         int tail = int.MaxValue;
-        foreach((int start, int end) point in list)
-        {
-            if(point.end < tail)
-            {
-                tail = point.end;
+        foreach((int s, int e)point in area){
+            
+            if(point.e < tail){
+                tail = point.e;
                 continue;
             }
-
-            if(point.start >= tail) // 같이 요격될 수 없음
-            {
-                ++answer;
-                tail = point.end;
+            if(point.s >= tail){
+                answer++;
+                tail = point.e;
             }
         }
-
-        return answer + 1; // 마지막 그룹은 요격안했으니 + 1
+        return ++answer;
     }
 }
