@@ -6,20 +6,20 @@ public class Solution {
         if(k >= enemy.Length)
             return enemy.Length;
 
-        var queue = new PriorityQueue();
+        var q = new PriorityQueue();
 
         int i = 0;
         for(; i < k; ++i) // 미리 k개를 사용한다.
-            queue.Push(enemy[i]);
+            q.Push(enemy[i]);
 
         // 순회하면서 최소값보다 크면 교체하고 재정렬한다.
         for(; i < enemy.Length; ++i)
         {
             int cur = enemy[i];
-            if(queue.Peek() < cur)
+            if(q.Peek() < cur)
             {
-                n -= queue.Pop(); // 무적권으로 사용되지 않은 병력 지불
-                queue.Push(cur);
+                n -= q.Pop(); // 무적권으로 사용되지 않은 병력 지불
+                q.Push(cur);
             }
             else
             {
@@ -32,10 +32,9 @@ public class Solution {
 
         return enemy.Length;
     }
-    }
+}
 
-    public class PriorityQueue
-    {
+public class PriorityQueue{
     List<int> heap = new List<int>();
 
     public void Push(int data)
