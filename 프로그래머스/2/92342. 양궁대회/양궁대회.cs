@@ -1,36 +1,54 @@
 using System;
-using System.Linq;
+
 public class Solution {
-    int maxVal = 0, minScore = 11;
-    bool[] maxState;
+    public int[] answer;
+    public int[] ryan_info;
+    public int[] apeach_info;
+    public int maxDiff = -1;
     public int[] solution(int n, int[] info) {
-        int[] answer = new int[11];
-        int[] need = info.Select(s => s + 1).ToArray();
-        bool[] state = new bool[11];
-        dfs(10, 0, 0, n, need, state, info, 11);
-        int apeachScore = 0;
+        apeach_info = info;
+        ryan_info = new int[11];
+        answer = new int[11];
+        dfs(n, 0, 0, 0);
         
-        for(int i = 0; i < 10; i++){
-            if(maxState[i]){
-                answer[i] = need[i];
-                n -= need[i];
-            }
-            if(info[i] > 0) apeachScore += 10 - i;
-        }
-        answer[10] = n;
-        return maxVal > apeachScore ? answer : new int[1] {-1};
+        return maxDiff != -1 ? answer : new int[1] {-1};
     }
-    public void dfs(int score, int sum, int cnt, int n, int[] need, bool[] state, int[] info, int lastAdd){
-        if(cnt > n || score == 0) return;
+    private void dfs(int left, int ryanScore, int apeachScore, int idx){
         
-        if(maxVal < sum || (maxVal == sum && lastAdd < minScore)){
-            maxVal = sum;
-            minScore = lastAdd;
-            maxState = (bool[])state.Clone();
+        if(idx == 11){
+            ryan_info[10] = left;
+        
+            int diff = ryanScore - apeachScore;
+            if(apeachScore < ryanScore && maxDiff <= diff){
+                
+                if(maxDiff == diff && !isLowerArr(ryan_info)) 
+                    return;
+                
+                maxDiff = diff;
+                answer = (int[])ryan_info.Clone();
+            }
+            return;
         }
-        dfs(score -1, sum, cnt, n, need, state, info, lastAdd);
-        state[10 - score] = true;
-        dfs(score -1, sum + score * (info[10 - score] > 0 ? 2 : 1), cnt + need[10-score], n, need, state, info, score);
-        state[10-score] = false;
+        
+        int need = apeach_info[idx] +1;
+        if(need <= left){
+            ryan_info[idx] = need;
+            dfs(left-need, ryanScore + (10 - idx), apeachScore, idx +1);
+            ryan_info[idx] = 0;
+        }
+        
+        if(apeach_info[idx] != 0)
+            dfs(left, ryanScore, apeachScore + (10 - idx), idx +1);
+        else
+            dfs(left, ryanScore, apeachScore, idx + 1);
+    }
+    
+    private bool isLowerArr(int[] new_arr){
+        for(int i = 9; i >= 0; i--){
+            if(answer[i] == new_arr[i]) continue;
+            if(answer[i] < new_arr[i]) return true;
+            break;
+        }
+        return false;
     }
 }
