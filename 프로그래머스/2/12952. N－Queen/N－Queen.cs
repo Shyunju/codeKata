@@ -1,47 +1,26 @@
 using System;
-using System.Linq;
-public class Solution {
-    public int solution(int n) 
-    {
-        int answer = 0;
-        int[] arr = Enumerable.Range(0, n).ToArray();
-        Perm(arr, 0, n, ref answer);
 
+public class Solution {
+    public int solution(int n) {
+        int answer = 0;
+        int[] arr = new int[n];
+        BackTracking(arr, n, 0, ref answer);
         return answer;
     }
-
-    private void Perm(int[] arr, int depth, int n, ref int answer)
-    {
-        if(depth == n)
-        {
-            ++answer;
+    private void BackTracking(int[] arr, int n, int depth, ref int answer){
+        if(depth == n){
+            answer++;
             return;
         }
-
-        for(int i = depth; i < n; ++i)
-        {
-            Swap(arr, i, depth);
-
-            if(IsValid(arr, depth))
-                Perm(arr, depth + 1, n, ref answer);
-
-            Swap(arr, i, depth);
+        for(int i = 0; i < n; i++){
+            arr[depth] = i;
+            if(IsValid(arr, depth)) BackTracking(arr, n, depth+1, ref answer);
         }
     }
-
-    private void Swap(int[] arr, int a, int b)
-    {
-        int temp = arr[a];
-        arr[a] = arr[b];
-        arr[b] = temp;
-    }
-
-    private bool IsValid(int[] arr, int depth)
-    {
-        for(int x = 0; x < depth; ++x)
-        {
-            if(Math.Abs(x - depth) == Math.Abs(arr[x] - arr[depth]))
-                return false;
+    private bool IsValid(int[] arr, int depth){
+        for(int x = 0; x < depth; x++){
+            if(arr[x] == arr[depth]) return false;
+            if(Math.Abs(arr[x] - arr[depth]) == Math.Abs(depth - x )) return false;
         }
         return true;
     }
