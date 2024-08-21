@@ -1,67 +1,48 @@
 using System;
 using System.Collections.Generic;
+
 public class Solution {
-    public int[] solution(string[,] places) 
-    {
+    public int[] solution(string[,] places) {
         int[] answer = new int[5];
-        for(int room = 0; room < places.GetLength(0); ++room)
-        {
-            char[,] matrix = new char[5, 5];
-            for(int k = 0; k < 5; ++k)
-            {
-                string str = places[room, k];
-                for(int s = 0; s < str.Length; ++s)
-                    matrix[k, s] = str[s];
+        
+        for(int i = 0; i < 5; i++){
+            bool possible = true;
+            for(int y = 0; y < 5; y++){
+                for(int x = 0; x < 5; x++){
+                    if(places[i,y][x] == 'P') possible = bfs(i, y, x, places);
+                    if(!possible) break;
+                }
+                if(!possible) break;
             }
-
-            answer[room] = IsCollectSpace(room, matrix);
+            if(possible) answer[i] = 1;
         }
-
+        
         return answer;
     }
-
-    private int IsCollectSpace(int index, char[,] matrix)
-    {
-        for(int y = 0; y < 5; ++y)
-        {
-            for(int x = 0; x < 5; ++x)
-            {
-                // P를 기준으로 길찾기해서 2거리에 다른 P가 발견되면 거리두기 안한 것.
-                if(matrix[y, x] != 'P') 
-                    continue; 
-
-                var stack = new Stack<(int, int)>();
-                var close = new HashSet<(int, int)>();
-                stack.Push((y, x));
-                close.Add((y, x));
-
-                while(stack.Count > 0)
-                {
-                    (int y, int x) cur = stack.Pop();
-
-                    if(!(cur.y == y && cur.x == x) && matrix[cur.y, cur.x] == 'P')
-                        return 0; // 거리두기 안지킴!
-
-                    if(Math.Abs(y - cur.y) + Math.Abs(x - cur.x) >= 2)
-                        continue; // 거리가 이미 2라면 더 먼곳은 체크할 필요없음.
-
-                    var pointList = new List<(int, int)>(); 
-                    if(cur.y > 0) pointList.Add((cur.y - 1, cur.x));
-                    if(cur.y < 4) pointList.Add((cur.y + 1, cur.x));
-                    if(cur.x > 0) pointList.Add((cur.y, cur.x - 1));
-                    if(cur.x < 4) pointList.Add((cur.y, cur.x + 1));
-
-                    foreach((int y, int x) point in pointList)
-                    {
-                        if(close.Contains(point)) continue;
-                        if(matrix[point.y, point.x] == 'X') continue;
-                        stack.Push(point);
-                        close.Add(point);
-                    }
+    private bool bfs(int i , int y, int x, string[,] places){
+        int[] dy = new int[4]{-1, 1, 0, 0};
+        int[] dx = new int[4]{0, 0, -1, 1};
+        
+        var q = new Queue<(int, int, int)>();
+        q.Enqueue((y, x, 0));
+        
+        while(q.Count > 0){
+            var cur = q.Dequeue();
+            
+            for(int j = 0; j < 4; j++){
+                int posY = cur.Item1 + dy[j];
+                int posX = cur.Item2 + dx[j];
+                int dir = cur.Item3 + 1;
+                
+                if(posY < 0 || posY > 4 || posX < 0 || posX > 4) continue;
+                if(posY == y && posX == x) continue;
+                
+                if(places[i, posY][posX] == 'P') return false;
+                if(places[i,posY][posX] == 'O' && dir < 2){
+                    q.Enqueue((posY,posX,dir));
                 }
             }
         }
-
-        return 1;
+        return true;
     }
 }
