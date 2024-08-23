@@ -1,45 +1,40 @@
 using System;
- 
+
 public class Solution {
     int[,] temp;
-    int[] answer = new int[]{0,0};
+    int[] answer = new int[2];
     public int[] solution(int[,] arr) {
-        temp=arr;
-        Function(0,0,arr.GetLength(0));
+        temp = arr;
+        Quad(0, 0, arr.GetLength(0));
         return answer;
     }
-    
-    public void Function(int startx,int starty,int sideLength)
-    {   
-        bool AllZero=true;
-        bool AllOne=true;
-        for (int i = startx; i < startx + sideLength; i++)
-        {
-            for (int j = starty; j < starty + sideLength; j++)
-            {
-                if (temp[i,j] == 0)
-                {
-                    AllOne = false;
-                }
-                if (temp[i,j] == 1)
-                {
-                    AllZero = false;
-                }
+    private void Quad(int starty, int startx, int side)
+    {
+        bool isZero = true;
+        bool isOne = true;
+        
+        for(int i = starty; i < starty + side; i++){
+            for(int j = startx; j < startx + side; j++){
+                if(temp[i,j] == 0) isOne = false;
+                else isZero = false;
             }
         }
-        if (AllZero == true)
-        {
-            answer[0]++;
+        if(isZero){
+            ++answer[0];
             return;
         }
-        if (AllOne == true)
-        {
-            answer[1]++;
+        if(isOne){
+            ++answer[1];
             return;
         }
-        Function(startx, starty, sideLength / 2);
-        Function(startx, starty + sideLength / 2, sideLength / 2);
-        Function(startx + sideLength / 2, starty, sideLength / 2);
-        Function(startx + sideLength / 2, starty + sideLength / 2, sideLength / 2);
+        
+        //1
+        Quad(starty, startx, side /2);
+        //2
+        Quad(starty, startx + side / 2, side /2);
+        //3
+        Quad(starty + side / 2, startx, side /2);
+        //4
+        Quad(starty + side / 2, startx + side / 2, side / 2);
     }
 }
