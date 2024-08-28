@@ -2,47 +2,44 @@ using System;
 using System.Collections.Generic;
 public class Solution {
     public int[] solution(int rows, int columns, int[,] queries) {
-        int[,] map = new int[rows,columns];
-        int count=1;
-        for(int i=0; i<rows; i++)
-        {
-            for(int j=0; j<columns; j++)
-            {
-                map[i,j]+=count;
-                count++;
+        int[] answer = new int[queries.GetLength(0)];
+        int[,] matrix = new int[rows, columns];
+        int cnt = 1;
+        for(int y = 0; y < rows; y++){
+            for(int x = 0; x < columns; x++){
+                matrix[y, x] = cnt++;
             }
         }
-        int[] answer = new int[queries.GetLength(0)];
-         for(int i = 0; i < queries.GetLength(0); i++){
-            int[] query =new int[4];
-            query[0]= queries[i,0];
-            query[1]= queries[i,1];
-            query[2]= queries[i,2];
-            query[3]= queries[i,3];
-            answer[i] = rotation(map,query);
-         }
+        for(int i = 0; i < queries.GetLength(0); i++){
+            Rotate(matrix, queries[i,0] -1, queries[i,1] -1, queries[i,2]-1, queries[i,3] -1, out int min);
+            answer[i] = min;
+        }
         return answer;
     }
-    private int rotation(int [,] m, int [] query) {
-        int n = m[query[0]-1, query[3]-1];
-        int min = n;
-        for (int i = query[3] - 1; i >= query[1]; i--) {
-            min = Math.Min(min, m[query[0]-1,i-1]);
-            m[query[0] - 1,i] = m[query[0] - 1,i - 1];
+    private void Rotate(int[,] matrix, int y1, int x1, int y2, int x2, out int min){
+        if(y1 == y2 && x1 == x2){
+            min = matrix[y1, x1];
+            return;
         }
-        for (int i = query[0]; i < query[2]; i++) {
-            min = Math.Min(min, m[i,query[1] - 1]);
-            m[i - 1,query[1] - 1] = m[i,query[1] - 1];
+        var list = new List<(int y, int x)>();
+        
+        for(int i = x1; i <= x2; i++) list.Add((y1, i));
+        for(int i = y1 +1; i <= y2; i++) list.Add((i, x2));
+        for(int i = x2 -1; i >= x1; i--) list.Add((y2, i));
+        for(int i = y2 -1; i >= y1; i--) list.Add((i, x1));
+        
+        int before = int.MaxValue;
+        (int y, int x) start = list[0];
+        min = matrix[start.y, start.x];
+        
+        for(int i = 0; i < list.Count; i++){
+            (int y, int x) cur = list[i];
+            int temp = matrix[cur.y, cur.x];
+            matrix[cur.y, cur.x] = before;
+            before = temp;
+            
+            if(temp < min) min = temp;
         }
-        for (int i = query[1]; i < query[3]; i++) {
-            min = Math.Min(min, m[query[2] - 1,i]);
-            m[query[2] - 1,i - 1] = m[query[2] - 1,i];
-        }
-        for (int i = query[2] - 1; i >= query[0]; i--) {
-            min = Math.Min(min, m[i - 1,query[3] - 1]);
-            m[i,query[3] - 1] = m[i - 1,query[3] - 1];
-        }
-        m[query[0],query[3] - 1] = n;
-        return min;
+        
     }
 }
