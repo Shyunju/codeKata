@@ -1,58 +1,28 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
+using System.Text;
 public class Solution {
-    public int[] solution(string[] operations) 
-    {
-        var queue = new MyQueue();
-        foreach(string str in operations)
-        {
-            if(str == "D 1")
-            {
-                queue.DeleteMax();
+    public int[] solution(string[] operations) {
+        int[] answer = new int[2];
+        var q = new List<int>();
+        
+        for(int i = 0; i < operations.Length; i++){
+            if(operations[i][0] == 'I'){
+                var sNum = operations[i].Substring(2);
+                q.Add(int.Parse(sNum));
+                q.Sort();
+                continue;
             }
-            else if(str == "D -1")
-            {
-                queue.DeleteMin();
-            }
-            else
-            {
-                int n = int.Parse(str.Split()[1]);   
-                queue.Add(n);
+            if(q.Count > 0){
+                if(operations[i].Length == 3) q.RemoveAt(q.Count -1);
+                else q.RemoveAt(0);
             }
         }
-        
-        return queue.Count > 0 ?  new int[2]{ queue.Max, queue.Min } : new int[2]{ 0, 0 };
-    }
-}
-    
-public class MyQueue
-{
-    List<int> queue;
-
-    public MyQueue()
-    {
-        queue = new List<int>();
-    }
-    
-    public int Count => queue.Count;
-    public int Max => queue[Count - 1];
-    public int Min => queue[0];
-    
-    public void Add(int n)
-    {
-        queue.Add(n);
-        queue.Sort();
-    }
-    
-    public void DeleteMin()
-    {
-        if(queue.Count > 0)
-            queue.RemoveAt(0);
-    }
-    
-    public void DeleteMax()
-    {
-        if(queue.Count > 0)
-            queue.RemoveAt(queue.Count - 1);
+        if(q.Count > 0){
+            answer[0] = q[q.Count -1];
+            answer[1] = q[0];
+        }
+        return answer;
     }
 }
