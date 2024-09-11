@@ -1,72 +1,60 @@
 using System;
+using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
 public class Solution {
     public string[] solution(string[] s) {
         string[] answer = new string[s.Length];
-        
-        for (int i = 0; i < s.Length; i++)
-        {
-            answer[i] = GetTransformedString(s[i]); 
+        for(int i = 0; i < s.Length; i++){
+            answer[i] = Change(s[i]);
         }
-    
         return answer;
     }
-    
-    public string GetTransformedString(string s)
-    {
-        if (s.Length < 3) return s;
-        // list로도 할 수 있을것같기도..?
-        Stack<char> stack = new Stack<char>();
-        int targetCount = 0; // 110 개수
-        int oneCount = 0; // 남은 문자에 대해 뒤에서부터 연속되는 1의 개수
-     
-        for (int i = 0; i < s.Length; i++)
-        {
-            char currentS = s[i];
-            
-            if (stack.Count < 2)
-            {
-                stack.Push(currentS);
+    private string Change(string str){
+        if(str.Length < 3) return str;
+        
+        var stack = new Stack<char>();
+        int cnt = 0;
+        for(int i = 0; i < str.Length; i++){
+            if(stack.Count < 2){
+                stack.Push(str[i]);
                 continue;
             }
-            
-            char prevS = stack.Pop();
-            char prevprevS = stack.Peek();
-            
-            if (prevprevS == '1' && prevS == '1' && currentS == '0')
-            {
-                targetCount += 1;
-                stack.Pop(); // prevprev도 제거
+            if(str[i] == '0'){
+                char c = stack.Pop();
+                if(c == '1' && stack.Peek() == '1'){
+                    cnt++;
+                    stack.Pop();
+                    continue;
+                }
+                stack.Push(c);
             }
-            else
-            {
-                stack.Push(prevS); // 뺐었던 prev S 넣기
-                stack.Push(currentS); // 현재 S 넣기
-            }
+            stack.Push(str[i]);
         }
+        var list = stack.ToList();
+        list.Reverse();
         
-        List<char> remainChars = stack.ToList(); // 순서 top -> bottom 순으로 list 만들어짐
-        
-        for (int i = 0; i < remainChars.Count; i++)
-        {
-            if (remainChars[i] != '1') break;
-            oneCount += 1;
-        }
-        
+        int oneCnt = 0;
         StringBuilder sb = new StringBuilder();
-        for (int i = remainChars.Count - 1; i >= oneCount; i--)
-        {
-            sb.Append(remainChars[i]);
+        for(int i = 0; i < list.Count; i++){
+            if(list[i] == '1'){
+                oneCnt++;
+                continue;
+            }
+            for(int j = 0; j < oneCnt; j++){
+                sb.Append("1");
+            }
+            oneCnt = 0;
+            sb.Append("0");
         }
-        
-        string transformedString = "";
-        transformedString += sb.ToString();
-        transformedString += String.Concat(Enumerable.Repeat("110", targetCount));
-        transformedString += new String('1', oneCount);
-        
-        return transformedString;
+        for(int i = 0; i < cnt; i++){
+            sb.Append("110");
+        }
+        for(int i = 0; i < oneCnt; i++){
+            sb.Append("1");
+        }
+        return sb.ToString();
     }
 }
+//한글자씩스택에 넣어 110을 찾아 없애고 갯수를 기록한다
+//남은 문자열에서 마지막에 있는 0 뒤로 110을 모두 붙이고 남은 1을 붙여 반환한다
