@@ -1,10 +1,10 @@
 # [level 3] 2차원 동전 뒤집기 - 131703 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/131703) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/131703#) 
 
 ### 성능 요약
 
-메모리: 31.5 MB, 시간: 245.34 ms
+메모리: 31.5 MB, 시간: 276.49 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 09월 15일 15:32:35
+2024년 09월 24일 21:08:03
 
 ### 문제 설명
 
