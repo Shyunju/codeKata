@@ -1,52 +1,35 @@
 using System;
 using System.Collections.Generic;
-
 public class Solution {
-    long answer = 0;
-    long[] longA;
     public long solution(int[] a, int[,] edges) {
-        long sum = 0;
-        int n = a.Length;
+        long answer = 0;
+        var dict = new Dictionary<int, List<int>>();
+        long[] nodeArr = new long[a.Length];
+        bool[] visited = new bool[a.Length];
         
-        longA = new long[n];
-        List<long>[] graph = new List<long>[n];
-        for (int i = 0; i < n; i++)
-        {
-            sum += a[i];
-            longA[i] = (long)a[i];
-            graph[i] = new List<long>();
+        long total = 0;
+        for(int i = 0; i< a.Length; i++){
+            dict.Add(i, new List<int>());
+            nodeArr[i] = (long)a[i];
+            total += (long)a[i];
+        }
+        if( total != 0)  return -1;
+        
+        for(int i =0; i< edges.GetLength(0); i++){
+            dict[edges[i,0]].Add(edges[i,1]);
+            dict[edges[i,1]].Add(edges[i,0]);
         }
         
-        if (sum != 0) return -1; // 전체 가중치 합을 0으로 못 만드는 경우
-        
-        // 인접 리스트 초기화
-        for (int i = 0; i < edges.GetLength(0); i++)
-        {
-            long firstNode = (long)edges[i, 0];
-            long secondNode = (long)edges[i, 1];
-            graph[firstNode].Add(secondNode);
-            graph[secondNode].Add(firstNode);
-        }
-        
-        bool[] visited = new bool[n]; 
-        DFS(0, 0, graph, visited);
+        DFS(0, 0, nodeArr, visited, dict, ref answer);
         return answer;
     }
-    
-    public void DFS(long currNode, long parentNode, List<long>[] graph, bool[] visited)
-    {   
-        visited[currNode] = true;
-        
-        foreach(int adjNode in graph[currNode])
-        {
-            if (!visited[adjNode])
-            {
-                DFS(adjNode, currNode, graph, visited);
-            }
+    private void DFS(int curr, int parent, long[] nodeArr, bool[] visited, Dictionary<int, List<int>> dict, ref long answer){
+        foreach(int child in dict[curr]){
+            visited[curr] = true;
+            if(!visited[child])
+                DFS(child, curr, nodeArr, visited, dict, ref answer);
         }
-        
-        answer += (long)Math.Abs(longA[currNode]);
-        longA[parentNode] += longA[currNode];
-        longA[currNode] = 0;
+        answer += Math.Abs(nodeArr[curr]);
+        nodeArr[parent] += nodeArr[curr];
     }
 }
