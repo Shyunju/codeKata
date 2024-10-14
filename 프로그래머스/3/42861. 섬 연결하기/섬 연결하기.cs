@@ -1,49 +1,36 @@
 using System;
 using System.Collections.Generic;
-
-public class Solution
-    {
-        public int solution(int n, int[,] costs)
-        {
-            int[,] distance = new int[n, n] ;
-            int i, j;
-
-            for(i=0;i<n;i++)
-            {
-                for(j=0;j<n;j++)
-                {
-                    distance[i, j] = -1;
-                }
+public class Solution {
+    public int solution(int n, int[,] costs) {
+        int answer = 0;
+        int [,] dist = new int[n,n];
+        for(int i = 0; i < n; i++){
+            for( int j = 0; j < n; j++){
+                dist[i,j] = -1;
             }
-            for(i=0;i<costs.GetLength(0);i++)
-            {
-                distance[costs[i,0], costs[i,1]] = costs[i, 2];
-                distance[costs[i,1], costs[i,0]] = costs[i, 2];
-            }
-            HashSet<int> ans = new HashSet<int>();
-            ans.Add(0);
-            int min;
-            int minIdx = -1;
-            int answer = 0;
-            while (ans.Count < n)
-            {
-                min = 9999999;
-                foreach(int it in ans)
-                {
-                    for(i=0;i<n;i++)
-                    {
-                        if (ans.Contains(i))
-                            continue;
-                        if(distance[it,i] != -1 && distance[it,i] < min)
-                        {
-                            min = distance[it, i];
-                            minIdx = i;
-                        }
+        }
+        for(int i = 0; i < costs.GetLength(0); i++){
+            dist[costs[i,0], costs[i,1]] = costs[i,2];
+            dist[costs[i,1], costs[i,0]] = costs[i,2];
+        }
+        int min;
+        int minIdx = -1;
+        HashSet<int> visit = new HashSet<int>();
+        visit.Add(0);
+        while(visit.Count < n){
+            min = int.MaxValue;
+            foreach(int node in visit){
+                for(int i = 0; i < n; i++){
+                    if(visit.Contains(i)) continue;
+                    if(dist[node, i] != -1 && dist[node, i] < min){
+                        min = dist[node, i];
+                        minIdx = i;
                     }
                 }
-                answer += min;
-                ans.Add(minIdx);
             }
-            return answer;
+            answer += min;
+            visit.Add(minIdx);
         }
+        return answer;
     }
+}
