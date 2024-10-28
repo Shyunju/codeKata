@@ -1,10 +1,10 @@
 # [level 3] 다단계 칫솔 판매 - 77486 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/77486?language=csharp) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/77486) 
 
 ### 성능 요약
 
-메모리: 58.8 MB, 시간: 169.21 ms
+메모리: 58.9 MB, 시간: 188.68 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 10월 27일 18:19:50
+2024년 10월 28일 21:25:52
 
 ### 문제 설명
 
