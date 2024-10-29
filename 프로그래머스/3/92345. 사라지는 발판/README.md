@@ -1,10 +1,10 @@
 # [level 3] 사라지는 발판 - 92345 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/92345?language=csharp) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/92345) 
 
 ### 성능 요약
 
-메모리: 31.5 MB, 시간: 24.05 ms
+메모리: 31.2 MB, 시간: 20.67 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 10월 11일 17:04:15
+2024년 10월 29일 15:49:22
 
 ### 문제 설명
 
