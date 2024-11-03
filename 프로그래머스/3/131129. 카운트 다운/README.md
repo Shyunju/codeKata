@@ -1,10 +1,10 @@
 # [level 3] 카운트 다운 - 131129 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/131129?language=cpp) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/131129?language=csharp) 
 
 ### 성능 요약
 
-메모리: 4.21 MB, 시간: 1.58 ms
+메모리: 39 MB, 시간: 143.78 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 10월 08일 19:38:50
+2024년 11월 03일 21:33:46
 
 ### 문제 설명
 
