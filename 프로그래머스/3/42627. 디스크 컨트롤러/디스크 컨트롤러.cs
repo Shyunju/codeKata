@@ -1,51 +1,40 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 public class Solution {
-    public int solution(int[,] jobs) 
-{
-    var jobQueue = new Queue<(int requestTime, int duration)>(
-        Enumerable.Range(0, jobs.GetLength(0))
-            .Select(e => (jobs[e, 0], jobs[e, 1]))
-            .OrderBy(e => e.Item1)
-    );
-
-    int time = 0;
-    int curRequestTime = 0;
-    int curRemain = 0;
-    int completeTimeSum = 0;
-
-    var jobCanStart = new List<(int requestTime, int duration)>();
-    while(jobQueue.Count > 0 || jobCanStart.Count > 0 || curRemain > 0)
-    {
-        if(curRemain > 0)
-        {
-            --curRemain;
-            ++time;
-
-            if(curRemain == 0) // 완료함
-                completeTimeSum += time - curRequestTime;    
-
-            continue;
+    public int solution(int[,] jobs) {
+        var jobQ = new Queue<(int requestTime, int duration)>(
+            Enumerable.Range(0, jobs.GetLength(0))
+            .Select(s => (jobs[s,0], jobs[s,1]))
+            .OrderBy(o => o.Item1));
+        
+        int time = 0;
+        int curRequestTime = 0;
+        int curDuration = 0;
+        int total = 0;
+        
+        var jobCanStart = new List<(int requestTime, int duration)>();
+        
+        while(jobQ.Count > 0 || jobCanStart.Count>0 || curDuration > 0){
+            if(curDuration > 0){
+                --curDuration;
+                ++time;
+                if(curDuration == 0)
+                    total += time - curRequestTime;
+                continue;
+            }
+            while(jobQ.Count > 0 && jobQ.Peek().Item1 <= time)
+                jobCanStart.Add(jobQ.Dequeue());
+            if(jobCanStart.Count == 0){
+                ++time;
+                continue;
+            }
+            (int requestTime, int duration) cur = jobCanStart.OrderBy(o => o.Item2).First();
+            jobCanStart.Remove(cur);
+            
+            curRequestTime = cur.requestTime;
+            curDuration = cur.duration;
         }
-
-        while(jobQueue.Count > 0 && jobQueue.Peek().Item1 <= time)
-            jobCanStart.Add(jobQueue.Dequeue());
-
-        if(jobCanStart.Count == 0) // 실행할 수 있는 작업이 없음
-        {
-            ++time;
-            continue;
-        }
-
-        (int requestTime, int duration) cur = jobCanStart.OrderBy(e => e.Item2).First();
-        jobCanStart.Remove(cur);
-
-        curRequestTime = cur.requestTime;
-        curRemain = cur.duration;
+        return total / jobs.GetLength(0);
     }
-
-    return completeTimeSum / jobs.GetLength(0);
-}
-
 }
