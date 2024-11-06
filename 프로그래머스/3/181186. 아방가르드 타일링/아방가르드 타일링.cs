@@ -22,6 +22,6 @@ public class Solution {
             }
             dp[i] = sum % per;
         }
-        return (int)(dp[n] % per);
+        return (int)dp[n];
     }
 }
