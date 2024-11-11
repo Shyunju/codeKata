@@ -11,14 +11,14 @@ public class Solution {
 
         //dp[a][b] : a분에 b온도를 맞추기 위한 최소 비용
         //최대온도는 t2를 초과할 필요가 없음
-        int[][] dp = new int[onboard.Length][];
-        for (int i = 0; i < dp.Length; i++)
-        {
-            dp[i] = new int[t2 + 2];
+        int[,] dp = new int[onboard.Length,t2 + 2];
+       
+        for (int i = 0; i < onboard.Length; i++){
+            for(int j = 0; j < t2 + 2; j++){
+                dp[i,j] = INF;
+            }
         }
-        for (int i = 0; i < onboard.Length; i++)
-            Array.Fill(dp[i], INF);
-        dp[0][0] = 0;
+        dp[0,0] = 0;
         for (int i = 1; i < onboard.Length; i++) {
             //다음 3가지 케이스 중 하나
             //1. 온도 올리기 (에어컨 가동 -> 비용 a)
@@ -32,26 +32,26 @@ public class Solution {
                 if (j == 0) {
                     //온도 올리기
                     //온도 유지하기
-                    min = Math.Min(min, dp[i-1][j]);
+                    min = Math.Min(min, dp[i-1,j]);
                     //온도 내리기
-                    if (j + 1 <= t2 + 1) min = Math.Min(min, dp[i-1][j+1]);
+                    if (j + 1 <= t2 + 1) min = Math.Min(min, dp[i-1,j+1]);
                 }
                 //2. 외부온도 != 목표온도
                 else {
                     //온도 올리기
-                    if (j - 1 >= 0) min = Math.Min(min, dp[i-1][j-1] + a);
+                    if (j - 1 >= 0) min = Math.Min(min, dp[i-1,j-1] + a);
                     //온도 유지하기
-                    min = Math.Min(min, dp[i-1][j] + b);
+                    min = Math.Min(min, dp[i-1,j] + b);
                     //온도 내리기
-                    if (j + 1 <= t2 + 1) min = Math.Min(min, dp[i-1][j+1]);
+                    if (j + 1 <= t2 + 1) min = Math.Min(min, dp[i-1,j+1]);
                 }
-                dp[i][j] = min;
+                dp[i,j] = min;
             }
         }
 
         int result = Int32.MaxValue;
         for (int j = 0; j <= t2 + 1; j++)
-            result = Math.Min(result, dp[onboard.Length-1][j]);
+            result = Math.Min(result, dp[onboard.Length-1,j]);
         return result;
     }
 }
