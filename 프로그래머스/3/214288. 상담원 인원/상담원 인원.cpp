@@ -4,6 +4,7 @@ using namespace std;
 //using System.Collections.Generic;
 vector<vector<int>> combs;
 //var combs = new List<List<int>>();
+//void dfs(int remain, List<int> cur, int idx)
 void dfs(int remain, vector<int> cur, int idx){
     if(remain == 0){
         combs.push_back(cur);
