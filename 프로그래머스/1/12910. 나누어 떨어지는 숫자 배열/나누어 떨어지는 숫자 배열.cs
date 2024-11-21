@@ -11,8 +11,7 @@ public class Solution {
             int[] none = {-1};
             return none;
         }
-        int[] result = answer.ToArray();
-        Array.Sort(result);
-        return result;
+        answer.Sort();
+        return answer.ToArray();
     }
 }
