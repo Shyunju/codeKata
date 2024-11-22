@@ -1,17 +1,15 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 public class Solution {
     public string solution(string s) {
-        List<int> numl = new List<int>();
-        string[] sl = s.Split(" "); 
-        int num = 0;
-        foreach(string i in sl)
-        {
-            if(int.TryParse(i, out num))
-                numl.Add(num);
+        string[] numS = s.Split(" ");
+        var num = new List<int>();
+        foreach(string i in numS){
+            int n = int.Parse(i);
+            num.Add(n);
         }
-        string answer = numl.Min().ToString() + " " + numl.Max().ToString();
+        string answer = num.Min() + " " + num.Max();
         return answer;
     }
 }
