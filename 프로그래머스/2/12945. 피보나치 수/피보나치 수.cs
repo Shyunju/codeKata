@@ -1,18 +1,12 @@
 public class Solution {
     public int solution(int n) {
-        int f1 = 1;
-        int f2 = 1;
-        int answer = 0;
-        if(n == 2)
-            return 1;
-        for(int i = 3; i <= n; i++)
-        {
-            answer = (f1 + f2) % 1234567;
-            f2 = f1;
-            f1 = answer;
+        int[] fibo = new int[n+1];
+        fibo[0] = 0;
+        fibo[1] = 1;
+        fibo[2] = 1;
+        for(int i = 3; i <= n; i++){
+            fibo[i] = (fibo[i-1] + fibo[i-2]) % 1234567;
         }
-        return answer;
+        return fibo[n] % 1234567;
     }
-    
-    
 }
