@@ -1,61 +1,39 @@
 using System;
-using System.Text;
-
+using System.Linq;
+using System.Collections.Generic;
 public class Solution {
-    public int[] dx = {1, 0, 0, -1};
-    public int[] dy = {0, -1, 1, 0};
-    public char[] dir = {'d', 'l', 'r', 'u'};
-    public int m;
-    public int n;
-    public StringBuilder sb;
-    public int targetX;
-    public int targetY;
-    public string answer;
-    
+    Dictionary<string, int> route = new Dictionary<string, int>{
+        {"d", 0}, {"u", 0}, {"r", 0}, {"l", 0}
+    };
     public string solution(int n, int m, int x, int y, int r, int c, int k) {
-        this.m = m;
-        this.n = n;
-        targetX = r;
-        targetY = c;        
-        sb = new StringBuilder();
-        answer = "";
-        
-        int length = GetDist(x, y, r, c);
-        // k, 도착지점까지 거리 짝, 홀 일치 하지 않으면 impossible
-        // 이동 가능한 거리가 도착지점보다 짧으면 impossible
-        if((k - length) % 2 == 1 || k < length) return "impossible";
-        
-        DFS(x, y, 0, k);
-        return answer == "" ? "impossible" : answer;
-    }
-    
-    // 현재 위치 (x, y) ~ 도착지점까지 거리
-    private int GetDist(int x, int y, int r, int c)
-    {
-        return (int)Math.Abs(x-r) + (int)Math.Abs(y-c);
-    }
-    
-    public void DFS(int x, int y, int movedDist, int k)
-    {
-        if(answer != "") return;
-        // 이동해야할 거리가 k보다 더 긴 경우
-        if(movedDist + GetDist(x, y, targetX, targetY) > k) return;
-        if(k == movedDist) // 이동 거리가 k가 되면 answer
-        {
-            answer = sb.ToString();
-            return;
-        }
-        
-        for(int i = 0; i < 4; i++)
-        {
-            int newX = x + dx[i];
-            int newY = y + dy[i];
-            if (newX <= 0 || newY <= 0 || newX > n || newY > m) continue;
+        string answer = "";
+        int dist = Math.Abs(x-r) + Math.Abs(y-c);
+        k -= dist;
+        if(k < 0 || k % 2 != 0) return "impossible";
+        else{
+            if(x > r) route["u"] = x -r;
+            else route["d"] = r -x;
             
-            // DFS + back tracking
-            sb.Append(dir[i]);
-            DFS(newX, newY, movedDist + 1, k);
-            sb.Remove(movedDist, 1);
+            if(y > c) route["l"] = y - c;
+            else route["r"] = c - y;
+            
+            int d = Math.Min(k /2, n - (x + route["d"]));
+            route["d"] += d;
+            route["u"] += d;
+            k -= d* 2;
+            
+            int l = Math.Min(k/2, y - route["l"] - 1);
+            route["l"] += l;
+            route["r"] += l;
+            k -= l * 2;
+            
+            answer = answer.PadRight(answer.Length + route["d"], 'd');
+            answer = answer.PadRight(answer.Length + route["l"], 'l');
+            
+            for(int i = k /2 ; i>0; i--) answer = answer + "rl";
+            answer = answer.PadRight(answer.Length + route["r"], 'r');
+            answer = answer.PadRight(answer.Length + route["u"], 'u');
         }
+        return answer;
     }
 }
