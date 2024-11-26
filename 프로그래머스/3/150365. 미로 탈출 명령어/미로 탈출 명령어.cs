@@ -1,39 +1,33 @@
 using System;
-using System.Linq;
-using System.Collections.Generic;
+using System.Text;
 public class Solution {
-    Dictionary<string, int> route = new Dictionary<string, int>{
-        {"d", 0}, {"u", 0}, {"r", 0}, {"l", 0}
-    };
+    public enum EDirType { d= 0, l=1, r=2, u=3}
+    public int GetMinDis(int x, int y, int r, int c) => Math.Abs(x-r) + Math.Abs(y-c);
     public string solution(int n, int m, int x, int y, int r, int c, int k) {
-        string answer = "";
-        int dist = Math.Abs(x-r) + Math.Abs(y-c);
-        k -= dist;
-        if(k < 0 || k % 2 != 0) return "impossible";
-        else{
-            if(x > r) route["u"] = x -r;
-            else route["d"] = r -x;
-            
-            if(y > c) route["l"] = y - c;
-            else route["r"] = c - y;
-            
-            int d = Math.Min(k /2, n - (x + route["d"]));
-            route["d"] += d;
-            route["u"] += d;
-            k -= d* 2;
-            
-            int l = Math.Min(k/2, y - route["l"] - 1);
-            route["l"] += l;
-            route["r"] += l;
-            k -= l * 2;
-            
-            answer = answer.PadRight(answer.Length + route["d"], 'd');
-            answer = answer.PadRight(answer.Length + route["l"], 'l');
-            
-            for(int i = k /2 ; i>0; i--) answer = answer + "rl";
-            answer = answer.PadRight(answer.Length + route["r"], 'r');
-            answer = answer.PadRight(answer.Length + route["u"], 'u');
+        if(GetMinDis(x, y, r, c) > k || (GetMinDis(x,y,r,c) % 2 != 0 && k % 2 == 0)) return "impossible";
+        StringBuilder sb = new StringBuilder();
+        
+        int[] dirY = new int[4] { 0, -1, 1, 0};
+        int[] dirX = new int[4] {1, 0, 0, -1};
+        
+        while(k != GetMinDis(x,y,r,c)){
+            k--;
+            for(int i = 0; i < 4; i++){
+                int moveX = x + dirX[i];
+                int moveY = y + dirY[i];
+                
+                if(moveX >= 1 && moveX <= n && moveY >= 1 && moveY <= m){
+                    x = moveX;
+                    y = moveY;
+                    sb.Append(((EDirType)i).ToString());
+                    break;
+                }
+            }
         }
-        return answer;
+        while(x < r) { sb.Append('d'); x++;}
+        while(y > c) { sb.Append('l'); y--;}
+        while(y < c) { sb.Append('r'); y++;}
+        while(x > r) { sb.Append('u'); x--;}
+        return sb.ToString();
     }
 }
