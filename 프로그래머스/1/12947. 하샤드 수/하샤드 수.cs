@@ -1,14 +1,14 @@
-using System;
 public class Solution {
     public bool solution(int x) {
-        int sum = 0;
+        bool answer = false;
         int num = x;
-        while(x > 0)
-        {
-            sum = sum + x % 10;
-            x /= 10;
+        int sum = 0;
+        while(num > 0){
+            sum += num % 10;
+            num /= 10;
         }
-        
-        return num % sum == 0 ? true : false;
+        if(x % sum == 0)
+            answer = true;
+        return answer;
     }
 }
