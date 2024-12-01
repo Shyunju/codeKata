@@ -1,10 +1,10 @@
 # [level 3] 산 모양 타일링 - 258705 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/258705) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/258705?language=csharp) 
 
 ### 성능 요약
 
-메모리: 7.73 MB, 시간: 2.06 ms
+메모리: 34.5 MB, 시간: 3.82 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 11월 29일 12:44:28
+2024년 12월 01일 20:13:51
 
 ### 문제 설명
 
