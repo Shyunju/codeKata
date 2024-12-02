@@ -2,26 +2,18 @@ using System;
 
 public class Solution {
     public int solution(int n, int[] tops) {
-        int[] visited = new int[200005];
-        int[] dp = new int[200005];
+        int[,] dp = new int[100001, 2];
+        dp[0,0] = 2 + tops[0];
+        dp[0,1] = 1;
         
-        for(int i = 0; i < tops.Length; i++){
-            if(tops[i] == 1)
-                visited[i*2+1] = 1;
-        }
-        dp[0] = 1;
-        dp[1] = 2;
-        if(visited[1] == 1)
-            dp[1] = 3;
-        
-        for(int j =2; j <= 2*n; j++){
-            if(j%2 == 1 && visited[j] == 1)
-                dp[j] = dp[j-1] + dp[j-1] + dp[j-2];
-            else
-                dp[j] = dp[j-1] + dp[j-2];
+        for(int i = 1; i < tops.Length; i++){
+            dp[i,0] = dp[i-1,0] * (2 + tops[i]) + dp[i-1,1] * ( 1+ tops[i]);
+            dp[i,1] = dp[i-1,0] + dp[i-1,1];
             
-            dp[j] %= 10007;
+            dp[i,0] %= 10007;
+            dp[i,1] %= 10007;
         }
-        return dp[2*n];
+        int answer = (dp[n-1,0] + dp[n-1,1]) % 10007;
+        return answer;
     }
 }
