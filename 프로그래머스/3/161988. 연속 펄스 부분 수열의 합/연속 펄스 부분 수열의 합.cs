@@ -3,7 +3,7 @@ using System.Linq;
 
 public class Solution
 {
-    public long GetMaxAccValue(ref int[] intArray)
+    public long GetMaxAccValue(int[] intArray)
     {
         long[] dp = new long[intArray.Length];
         
@@ -29,6 +29,6 @@ public class Solution
             isCheck = !isCheck;
         }
         
-        return Math.Max(GetMaxAccValue(ref sequence), GetMaxAccValue(ref sequence2));
+        return Math.Max(GetMaxAccValue(sequence), GetMaxAccValue(sequence2));
     }
 }
