@@ -72,8 +72,8 @@ public class Solution
         }
 
         // 점수 조합 계산
-        int[] score1 = new int[1000];
-        int[] score2 = new int[1000];
+        int[] score1 = new int[500];
+        int[] score2 = new int[500];
 
         DFS(score1, dice1, half, 0, 0);
         DFS(score2, dice2, half, 0, 0);
@@ -82,7 +82,7 @@ public class Solution
         int total = (int)Math.Pow(6, cnt);
         int win = 0, pre = 0;
 
-        for (int i = 1; i < 1000; i++)
+        for (int i = 1; i < 500; i++)
         {
             if (score1[i] > 0)
                 win += score1[i] * pre; // 이길 수 있는 경우의 수 누적
