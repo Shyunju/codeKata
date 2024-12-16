@@ -1,10 +1,10 @@
 # [level 3] 고고학 최고의 발견 - 131702 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/131702?language=csharp) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/131702) 
 
 ### 성능 요약
 
-메모리: 35.2 MB, 시간: 368.80 ms
+메모리: 35 MB, 시간: 317.71 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 12월 15일 20:57:58
+2024년 12월 16일 15:20:53
 
 ### 문제 설명
 
