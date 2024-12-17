@@ -29,7 +29,7 @@ public class Solution {
             for(int i = 0; i < n; i++){
                 for(int j = 0; j < n; j++){
                     total += rotationClone[j];
-                    if(total > answer) return;
+                    if(total >= answer) return;
                     
                     for(int d = 0; d < 5; d++){
                         int x = i + dx[d];
