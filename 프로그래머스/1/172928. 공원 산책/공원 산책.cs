@@ -2,46 +2,53 @@ using System;
 
 public class Solution {
     public int[] solution(string[] park, string[] routes) {
-        int[] answer = new int[2];
-        
-        int[] dy = new int[]{-1, 1, 0, 0};
-        int[] dx = new int[]{0, 0, -1, 1};
-        
-        char[] direction = new char[]{'N', 'S', 'W', 'E'};
-        
-        int height = park.Length;
-        int width = park[0].Length;
-        
-        for(int i = 0; i <height; i++){
-            for(int j = 0; j < width; j++){
+        //s의 좌표를 찾는다(새로운 맵을 만든다)
+        int[,] map = new int[park.Length, park[0].Length];
+        int y = 0;
+        int x = 0;
+        for(int i = 0; i < park.Length; i++){
+            for(int j = 0; j < park[0].Length; j++){
                 if(park[i][j] == 'S'){
-                    answer[0] = i;
-                    answer[1] = j;
-                }
+                    y = i;
+                    x = j;
+                }else if(park[i][j] == 'X')
+                    map[i,j] = 1;
             }
         }
-        foreach(string i in routes){
-            int dir = Array.IndexOf(direction, i[0]);
-            int count = int.Parse(i[2].ToString());
-            int y = answer[0];
-            int x = answer[1];
-            for(int j = 1; j <= count; j++){
-                if(y + dy[dir] < 0 || y + dy[dir] >= height || x + dx[dir] < 0 || x + dx[dir] >= width){
-                    y = answer[0];
-                    x = answer[1];
+        char[] dir = {'N', 'S', 'W', 'E'};
+        int[] dy = {-1, 1, 0, 0};
+        int[] dx = {0, 0, -1, 1};
+        //명령을 가져온다
+        foreach(string cmd in routes){
+            int op = Array.IndexOf(dir, cmd[0]); //가능 방향
+            int n = int.Parse(cmd[2].ToString()); //얼마나 가야하는가
+            
+            int nextY = y;
+            int nextX = x;
+            bool possible = true;
+            
+            for(int i = 0; i < n; i++){
+                nextY += dy[op];
+                nextX += dx[op];
+                if(nextY < 0 || nextY >= map.GetLength(0) || nextX < 0 || nextX >= map.GetLength(1)){
+                    possible = false;
                     break;
                 }
-                if(park[y + dy[dir]][x + dx[dir]] == 'X'){
-                    y = answer[0];
-                    x = answer[1];
+                if(map[nextY, nextX] == 1){
+                    possible = false;
                     break;
                 }
-                y += dy[dir];
-                x += dx[dir];
             }
-            answer[0] = y;
-            answer[1] = x;
+            if(possible){
+                y = nextY;
+                x = nextX;
+            }
         }
+        int[] answer = new int[2];
+        answer[0] = y;
+        answer[1] = x;
         return answer;
+        //명령을 따라 움직이며 위치를 파악한다
+        //불가능이라면 그냥 리턴, 가능하다면 결과를 갱신후 리턴
     }
 }
