@@ -1,29 +1,24 @@
 using System;
 
 public class Solution {
-    public int solution(int n, int[,] computers) 
-    {
-        bool[] visited = new bool[n];       
-
+    public int solution(int n, int[,] computers) {
         int answer = 0;
-
-        for(int i = 0; i < n; i++)
-        {
-            if (visited[i] == false) { 
+        bool[] visited = new bool[n];
+        
+        for(int i = 0; i < n; i++){
+            if(!visited[i]){
                 answer++;
                 DFS(computers, visited, i);
             }
         }
         return answer;
     }
-
-    public static void DFS(int[,] computers, bool[] visited, int start)
-    {
-        visited[start] = true;
-        for(int i = 0; i < computers.GetLength(0); i++)
-        {
-            if (computers[start, i] == 1 && !visited[i])
+    private void DFS(int[,] computers, bool[] visited, int cur){
+        visited[cur] = true;
+        for(int i = 0; i < computers.GetLength(0); i++){
+            if(computers[cur, i] == 1 && !visited[i]){
                 DFS(computers, visited, i);
+            }
         }
     }
 }
