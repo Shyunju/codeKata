@@ -97,14 +97,15 @@ string TenToN(int n, int num)
 {
     if (num == 0) return "0";
 
-    string answer = "";
-    for (int idx = 2; idx >= 0; idx--)
+    string result = "";
+    while (num > 0)
     {
-        int div = num / (int)Math.Pow(n, idx);
-        if (answer.Length > 0 || div > 0) answer += div.ToString();
-        num %= (int)Math.Pow(n, idx);
+        int remainder = num % n;
+        result = remainder.ToString() + result;
+        num /= n;
     }
 
-    return answer;
+    return result;
 }
+
 }
