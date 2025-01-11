@@ -1,25 +1,19 @@
 using System;
+using System.Text;
 
-namespace for문10
+internal class Program
 {
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            int n = int.Parse(Console.ReadLine());
-
-            for (int i = 0; i < n; i++)
-            {
-                for (int j = 0; j < n-i-1; j++)
-                {
-                    Console.Write(" ");
-                }
-                for (int j = 0; j < i+1; j++)
-                {
-                    Console.Write("*");
-                }
-                Console.Write("\n");
-            }
+    static void Main(string[] args){
+        int n = int.Parse(Console.ReadLine());
+        StringBuilder sb = new();
+        
+        int a = 0;
+        for(int i = 1; i <= n; i++){
+            a = n - i;
+            sb.Append(' ', a);
+            sb.Append('*', i);
+            sb.AppendLine();
         }
+        Console.Write(sb.ToString());
     }
 }
