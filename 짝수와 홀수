@@ -7,6 +7,5 @@ public class Solution {
             answer ="Odd";
         }
         return answer;
-        //테스트 주석
     }
 }
