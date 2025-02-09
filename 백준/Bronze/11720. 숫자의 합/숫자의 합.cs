@@ -9,6 +9,6 @@ internal class Program
         for(int i = 0; i < n; i++){
              answer += int.Parse(s[i].ToString());
         }
-        Console.Write(answer);
+        Console.WriteLine(answer);
     }
 }
