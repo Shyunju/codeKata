@@ -12,7 +12,8 @@ public class Solution {
             int[] data = q.Dequeue();
             
             if(data[1] > dp[data[0], 0] || ( data[1] == dp[data[0],0] && data[2] <= dp[data[0],1])){
-                if(dp[data[0], 0] != 0) continue;
+                if(dp[data[0], 0] != 0) 
+                    continue;
             }
             dp[data[0], 0] = data[1];
             dp[data[0], 1] = data[2];
@@ -28,6 +29,7 @@ public class Solution {
             for(int i = 22; i <= 40; i+=2)
                 if(data[0] + i <= target)
                     q.Enqueue(new int[]{data[0]+i, data[1]+1, data[2]});
+            
             for(int i = 21; i <= 60; i+=3)
                 if(data[0] + i <= target)
                     q.Enqueue(new int[]{data[0]+i, data[1]+1, data[2]});
