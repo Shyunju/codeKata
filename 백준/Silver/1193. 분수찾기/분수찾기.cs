@@ -5,7 +5,9 @@ internal class Program
 {
     static void Main(string[] args){
         int num = int.Parse(Console.ReadLine());
-        int lineCnt = 0, lineSum = 0, lineIdx = 0;
+        int lineCnt = 0;
+        lineSum = 0;
+        lineIdx = 0;
         
         while(num > lineSum){
             lineCnt++;
