@@ -7,8 +7,6 @@ public class Solution {
         Array.Sort(A);
         Array.Sort(B);
         //큰수부터 비교한다
-        //이길 수 있으면 카운트 증가
-        //이길 수 없으면 가장 작은수로 패스
         var list = B.ToList();
         for(int i = A.Length-1; i >=0 ; i--){
             if(A[i] >= list[list.Count -1]){
