@@ -16,7 +16,7 @@ internal class Program
             while(true){
                 if(n >= (6* start + 2) && n <= (6 * (start + gap) +1)){
                     Console.Write(answer + 1);
-                    return;
+                    break;
                 }
                 start += gap;
                 gap++;
