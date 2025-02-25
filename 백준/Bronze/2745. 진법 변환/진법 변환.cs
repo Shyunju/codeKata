@@ -1,22 +1,37 @@
-using System;
+using System.Numerics;
 
-internal class Program
+string[] s = Console.ReadLine().Split();
+string N = s[0];
+int B = int.Parse(s[1]);
+
+BigInteger result = ConvertToDecimal(N, B);
+Console.WriteLine(result);
+
+static BigInteger ConvertToDecimal(string N, int B)
 {
-    static void Main(string[] args){
-        string[] token = Console.ReadLine().Split();
-        string n = token[0];
-        int b = int.Parse(token[1]);
-        double answer = 0;
-        
-        for(int i = n.Length-1; i >= 0; i--){
-            int digit = 0;
-            if(char.IsDigit(n[i]))
-                digit = int.Parse(n[i].ToString());
-            else
-                digit = (int)n[i] - 55;
-            
-            answer +=  Math.Pow(b, n.Length-1-i) * digit;
+    BigInteger decimalValue = 0;
+
+    for (int i = 0; i < N.Length; i++)
+    {
+        char currentChar = N[i];
+
+        BigInteger digit;
+
+        // 현재 문자가 숫자인 경우
+        if (char.IsDigit(currentChar))
+        {
+            digit = currentChar - '0';
         }
-        Console.Write(answer);
+        // 현재 문자가 알파벳인 경우
+        else
+        {
+            digit = char.ToUpper(currentChar) - 'A' + 10;
+        }
+
+        // 현재 자릿수의 값을 10진법 결과에 누적
+        decimalValue = decimalValue * B + digit;
     }
+
+    return decimalValue; 
+
 }
