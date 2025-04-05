@@ -8,7 +8,7 @@ public class Solution {
             if( n / ten == 0){
                 break;
             }else{
-                ten = ten * 10;
+                ten *= 10;
             }
         }
         ten = ten / 10;
