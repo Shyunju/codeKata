@@ -6,7 +6,7 @@ public class Solution {
         for(int i = 5; i >0; i-=2)
         {
             answer += hp / i;
-            hp = hp % i;
+            hp %= i;
             if(hp == 0)
                 break;
         }
