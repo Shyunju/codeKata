@@ -5,11 +5,10 @@ public class Solution {
         int ten =1;
         int answer = 0;
         for(int i =0; i < 9 ; i++){
-            if( n / ten == 0){
+            if( n / ten == 0)
                 break;
-            }else{
-                ten *= 10;
-            }
+            ten *= 10;
+            
         }
         ten = ten / 10;
         while( n != 0){
