@@ -1,19 +1,20 @@
 using System;
-
+using System.Linq;
 public class Solution {
     public int solution(int[,] sizes) {
-        int[,] sort = new int[sizes.GetLength(0),sizes.GetLength(1)];
-        
-        int width = 0;
-        int height = 0;
-        
-        for(int i= 0 ; i < sizes.GetLength(0); i++){
-            sort[i, 0] = Math.Max(sizes[i,0], sizes[i,1]);
-            sort[i, 1] = Math.Min(sizes[i,0], sizes[i,1]);
-            
-            width = Math.Max(width, sort[i,0]);
-            height = Math.Max(height, sort[i,1]);
+        int[] width = new int[sizes.GetLength(0)];
+        int[] height = new int[sizes.GetLength(0)];
+        for(int i = 0; i < sizes.GetLength(0); i++)
+        {
+            if(sizes[i,0] >= sizes[i,1])
+            {
+                width[i] = sizes[i,0];
+                height[i] = sizes[i,1];
+            }else{
+                width[i] = sizes[i,1];
+                height[i] = sizes[i,0];
+            }
         }
-        return width * height;
+        return width.Max() * height.Max();
     }
 }
