@@ -10,8 +10,7 @@ public class Solution {
             {
                 babbling[j]= babbling[j].Replace(bab[i], " "); 
             }
-            babbling[j] = babbling[j].Replace(" ", "");
-            if(babbling[j].Length == 0)
+            if(string.IsNullOrWhiteSpace(babbling[j]))
                 answer++;
         }
         
