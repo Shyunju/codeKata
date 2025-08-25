@@ -2,19 +2,20 @@ using System;
 using System.Collections.Generic;
 public class Solution {
     public string[] solution(string[] players, string[] callings) {
-        var dic = new Dictionary<string, int>();
-        for(int i = 0; i < players.Length; i++){
-            dic.Add(players[i],i);
+        Dictionary<string, int> dic = new Dictionary<string, int>();
+        for(int i = 1; i <= players.Length; i++)
+        {
+            dic.Add(players[i-1], i);
         }
-        foreach(string name in callings){
-            int rank = dic[name];
+        foreach(string name in callings)
+        {
+            int rank = dic[name] -1;
             string temp = players[rank-1];
+            players[rank] = players[rank-1];
+            players[rank -1] = name; 
             
-            players[rank-1] = name;
-            players[rank] = temp;
-            
-            dic[name]--;
             dic[temp]++;
+            dic[name]--;
         }
         return players;
     }
