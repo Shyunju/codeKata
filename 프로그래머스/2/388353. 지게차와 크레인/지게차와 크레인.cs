@@ -13,6 +13,10 @@ public class Solution {
             }
         }
         
+        //글자가 하나면 외벽 노출된 요소만 제거 = 포문을 돌며 좌우 상하가 범위 밖이거나 null인 요소 좌표 저장 후 제거
+        //글자가 두개면 오든 요소를 제거 = 포문을 돌며 모든 요소 제거
+        //최종적으로 남아있는 즉 널이 아닌 요소의 수 리턴
+        
         foreach(string request in requests)
         {
             char target = request[0];
@@ -46,15 +50,25 @@ public class Solution {
     void DeleteAtSide(ref char?[,] containers, char target)
     {
         List<(int, int)> points = new List<(int, int)>();
+        int[] dirX = {0, 0, -1, 1};
+        int[] dirY = {-1, 1, 0, 0};
         for(int i = 0; i < containers.GetLength(0); i++)
         {
             for(int j = 0; j < containers.GetLength(1); j++)
             {
                 if(containers[i,j] == target)
                 {
-                    if(BFS(i, j, ref containers))
+                    for(int k = 0; k < 4; k++)
                     {
-                        points.Add((i,j));
+                        if(i+dirX[k] < 0 || i+dirX[k] >= containers.GetLength(0) || j+dirY[k] < 0 || j+dirY[k] >= containers.GetLength(1)) //out of range
+                        {
+                            points.Add((i, j));
+                            break;
+                        }else if(containers[i+dirX[k],j+dirY[k]] == null)
+                        {
+                            points.Add((i, j));
+                            break;
+                        }
                     }
                 }
             }            
@@ -62,46 +76,7 @@ public class Solution {
         foreach(var point in points)
         {
             containers[point.Item1, point.Item2] = null;
-        }        
-    }
-    private bool BFS(int startY, int startX, ref char?[,] containers)
-    {
-        int rows = containers.GetLength(0);
-        int cols = containers.GetLength(1);
-        bool[,] visited = new bool[rows, cols];
-        Queue<(int, int)> queue = new Queue<(int, int)>();
-        queue.Enqueue((startY, startX));
-        visited[startY, startX] = true;
-
-        int[] dirY = { -1, 1, 0, 0 };
-        int[] dirX = { 0, 0, -1, 1 };
-
-        while (queue.Count > 0)
-        {
-            var (y, x) = queue.Dequeue();
-
-            if (y < 0 || y >= rows || x < 0 || x >= cols)
-            {
-                return true;
-            }
-
-            for (int k = 0; k < 4; k++)
-            {
-                int newY = y + dirY[k];
-                int newX = x + dirX[k];
-
-                if (newY < 0 || newY >= rows || newX < 0 || newX >= cols)
-                {
-                    return true;
-                }
-
-                if (!visited[newY, newX] && containers[newY, newX] == null)
-                {
-                    visited[newY, newX] = true;
-                    queue.Enqueue((newY, newX));
-                }
-            }
         }
-        return false;
+        
     }
 }
