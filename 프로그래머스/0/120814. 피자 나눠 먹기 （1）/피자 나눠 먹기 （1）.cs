@@ -2,7 +2,8 @@ using System;
 
 public class Solution {
     public int solution(int n) {
-        double answer = Math.Ceiling(n / (double)7);
-        return (int)answer;
+        int answer = n / 7;
+        answer += n % 7 > 0 ? 1 : 0;
+        return answer;
     }
 }
