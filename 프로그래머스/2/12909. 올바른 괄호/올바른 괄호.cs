@@ -2,10 +2,8 @@ using System;
 using System.Collections.Generic;
 public class Solution {
     public bool solution(string s) {
-        char[] parenthesis = s.ToCharArray();
-        
         Stack<char> stk = new Stack<char>();
-        foreach(char i in parenthesis)
+        foreach(char i in s)
         {
             if(i == '(')
             {
@@ -16,8 +14,6 @@ public class Solution {
                 return false;
             stk.Pop();                
         }
-        if(stk.Count > 0)
-            return false;
-        return true;
+        return stk.Count > 0 ? false : true;
     }
 }
