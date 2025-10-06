@@ -1,21 +1,23 @@
 using System;
 using System.Collections.Generic;
-
 public class Solution {
     public bool solution(string s) {
+        char[] parenthesis = s.ToCharArray();
         
-        Stack<string> stack = new Stack<string>();
-        if(s[0].ToString().Equals(")"))
-            return false;
-        
-        foreach(char i in s)
+        Stack<char> stk = new Stack<char>();
+        foreach(char i in parenthesis)
         {
-            string item = i.ToString();
-            if(item.Equals("("))
-                stack.Push(item);
-            else if(item.Equals(")") && stack.Count > 0)
-                stack.Pop();
+            if(i == '(')
+            {
+                stk.Push(i);
+                continue;
+            }
+            if(stk.Count == 0)
+                return false;
+            stk.Pop();                
         }
-        return stack.Count == 0 ? true : false;
+        if(stk.Count > 0)
+            return false;
+        return true;
     }
 }
