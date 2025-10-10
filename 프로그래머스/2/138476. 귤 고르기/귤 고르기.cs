@@ -1,28 +1,24 @@
 using System;
 using System.Collections.Generic;
+using System.Linq; 
 public class Solution {
     public int solution(int k, int[] tangerine) {
+        Dictionary<int, int> dic = new Dictionary<int, int>();
         int answer = 0;
-        
-        Dictionary<int, int> size = new Dictionary<int, int>();
         foreach(int i in tangerine)
         {
-            if(!size.ContainsKey(i))
-                size.Add(i, 1);
-            else
-                size[i]++;
+            if(!dic.ContainsKey(i))
+                dic.Add(i, 0);
+            dic[i]++;
         }
-        
-        List<int> count = new List<int>(size.Values);
+        List<int> count = new List<int>(dic.Values);
         count.Sort();
-        
-        int kCount = 0;
-        int kIndex = count.Count - 1;
-        
-        while(k>kCount)
+        count.Reverse();
+        while(k > 0)
         {
-            kCount += count[kIndex--];
+            k -= count[0];
             answer++;
+            count.RemoveAt(0);
         }
         return answer;
     }
