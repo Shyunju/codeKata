@@ -1,42 +1,39 @@
 using System;
 using System.Collections.Generic;
-
 public class Solution {
     public int solution(string s) {
         int answer = 0;
         List<char> str = new List<char>(s);
-        for(int i = 0; i < s.Length; i++)
+        if(str.Count % 2 == 1)
+            return 0;
+        for(int i = 0; i < str.Count; i++)
         {
-            answer += isCollect(str) ? 1 : 0;
+            answer += CheckBraket(str) ? 1 : 0;
             str.Add(str[0]);
             str.RemoveAt(0);
         }
         return answer;
     }
     
-    public bool isCollect(List<char> str)
+    private bool CheckBraket(List<char> str)
     {
         string open = "({[";
         string close = ")}]";
-        
-        Stack<char> stack = new Stack<char>();
-        
-        for(int i = 0; i <str.Count; i++)
+        Stack<char> bracket = new Stack<char>();
+        for(int i = 0; i < str.Count; i++)
         {
             if(open.Contains(str[i]))
-                stack.Push(str[i]);
-            else{
-                if(stack.Count == 0)
-                    return false;
-                if(str[i] != close[open.IndexOf(stack.Peek())])
-                    return false;
-                
-                stack.Pop();
+            {
+                bracket.Push(str[i]);
+                continue;
             }
+            if(bracket.Count == 0)
+                return false;
+            if(str[i] != close[open.IndexOf(bracket.Peek())])
+                return false;
+            
+            bracket.Pop();
         }
-        
-        if(stack.Count != 0)
-            return false;
-        return true;
+        return bracket.Count > 0 ? false : true;
     }
 }
