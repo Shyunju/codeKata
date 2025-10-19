@@ -2,11 +2,13 @@ using System;
 
 public class Solution {
     public int solution(int n) {
-        for(int x = 2; x < n; x++)
+        int answer = 2;
+        while(true)
         {
-            if(n % x == 1)
-                return x;
+            if(n % answer == 1)
+                return answer;
+            answer++;
         }
-        return n-1;
+        return answer;
     }
 }
