@@ -1,9 +1,8 @@
 using System;
 public class Solution {
     public string solution(string[] seoul) {
-        int answer = 0;
-        answer = Array.FindIndex(seoul, i => i == "Kim");
-        
-        return string.Format("김서방은 {0}에 있다", answer);
+        int idx = Array.IndexOf(seoul, "Kim");
+        string answer = "김서방은 " + idx + "에 있다";
+        return answer;
     }
 }
