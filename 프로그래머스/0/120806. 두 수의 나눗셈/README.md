@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 31.5 MB, 시간: 0.13 ms
+메모리: 31.4 MB, 시간: 0.23 ms
 
 ### 구분
 
@@ -16,11 +16,11 @@
 
 ### 제출 일자
 
-2024년 04월 02일 14:20:45
+2025년 10월 31일 17:40:23
 
 ### 문제 설명
 
-<p>정수 <code>num1</code>과 <code>num2</code>가 매개변수로 주어질 때, <code>num1</code>을 <code>num2</code>로 나눈 값에 1,000을 곱한 후 정수 부분을 return 하도록 soltuion 함수를 완성해주세요.</p>
+<p>정수 <code>num1</code>과 <code>num2</code>가 매개변수로 주어질 때, <code>num1</code>을 <code>num2</code>로 나눈 값에 1,000을 곱한 후 정수 부분을 return 하도록 solution 함수를 완성해주세요.</p>
 
 <hr>
 
