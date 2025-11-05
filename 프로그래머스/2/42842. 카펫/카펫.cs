@@ -3,23 +3,19 @@ using System;
 public class Solution {
     public int[] solution(int brown, int yellow) {
         int[] answer = new int[2];
-        
         int all = brown + yellow;
-        
-        for(int i = 1; i <= all; i++)
+        int max = (int)Math.Sqrt(all);
+        for(int i = 3; i <= max; i++)
         {
-            int h = i;
-            int w = all / i;
-            if( h > w || w == h)
-            {
-                if( all - (w*2 + h*2 - 4) == yellow)
-                {
-                    answer[0]= h;
-                    answer[1]= w;
-                    break;
-                }
-            }
+            int height = i - 2;
+            int width = (brown - (i * 2)) / 2;
             
+            if(height * width == yellow)
+            {
+                answer[0] = width + 2;
+                answer[1] = height + 2;
+                break;
+            }
         }
         return answer;
     }
