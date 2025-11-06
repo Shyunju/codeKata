@@ -1,17 +1,16 @@
 using System;
 
 public class Solution {
-    public long solution(int balls, int share) {
+    public int solution(int balls, int share) {
+        if(balls == share) return 1;
         long answer = 1;
-        int cnt = 1;
-        
-        while(cnt <= share)
+        int idx = 1;
+        for(int i = share + 1; i <= balls; i++)
         {
-            answer *= balls--;
-            answer /= cnt++; 
+            answer *= i;
+            answer /= idx++;
         }
-        return answer;
+        
+        return (int)answer;
     }
-    
-   
 }
