@@ -11,7 +11,7 @@ public class Solution {
         // union-find
         int[] parent = new int[n];
         int[] rank = new int[n];
-        for (int i = 0; i < n; ++i) { parent[i] = i; rank[i] = 0; }
+        for (int i = 0; i < n; ++i) { parent[i] = i;}
 
         int[] degree = new int[n];
 
