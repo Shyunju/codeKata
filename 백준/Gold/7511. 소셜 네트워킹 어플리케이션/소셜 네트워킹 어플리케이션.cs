@@ -26,6 +26,7 @@ public class Program
             for (int j = 0; j < relation; j++)
             {
                 var line = sr.ReadLine().AsSpan();
+//int[] input = Array.ConvertAll(Console.ReadLine().Split());
                 int space = line.IndexOf(' ');
                 int a = int.Parse(line.Slice(0, space));
                 int b = int.Parse(line.Slice(space + 1));
