@@ -3,9 +3,11 @@ using System;
 public class Solution {
     public int solution(int n) {
         int answer = 0;
-        for(int i = 2; i <= n; i += 2)
+        int count = 2;
+        while(count <= n)
         {
-            answer += i;
+            answer += count;
+            count += 2;
         }
         return answer;
     }
