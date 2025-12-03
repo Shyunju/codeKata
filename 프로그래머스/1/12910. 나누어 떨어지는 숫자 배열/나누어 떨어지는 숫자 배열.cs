@@ -1,17 +1,9 @@
 using System;
-using System.Collections.Generic;
+using System.Linq;
 public class Solution {
     public int[] solution(int[] arr, int divisor) {
-        List<int> answer = new List<int>();
-        foreach(int i  in arr){
-            if(i % divisor == 0)
-                answer.Add(i);
-        }
-        if(answer.Count == 0){
-            int[] none = {-1};
-            return none;
-        }
-        answer.Sort();
-        return answer.ToArray();
+        int[] answer = arr.Where(s => s % divisor == 0).OrderBy(o => o).ToArray();
+        int[] fail = {-1};
+        return answer.Length > 0 ? answer : fail;
     }
 }
