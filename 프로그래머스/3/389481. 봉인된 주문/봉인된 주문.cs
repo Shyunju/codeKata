@@ -14,9 +14,8 @@ public class Solution {
         long[] list = bans.Select(e=>StrToLong(e)).OrderBy(e=>e).ToArray();
 
         foreach(var num in list){
-            if(num <= n){
-                n++;
-            }
+            if(num <= n)
+                n++;            
         }
         string answer = LongToStr(n);
 
