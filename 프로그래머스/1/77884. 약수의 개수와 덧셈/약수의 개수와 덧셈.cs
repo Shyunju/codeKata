@@ -7,15 +7,11 @@ public class Solution {
         
         for(int i = left; i <= right; i++){
             count = 0;
-            for(int j= 1; j*j <= i; j++){
-                if(j*j == i) count++;
+            for(int j = 1; j * j <= i; j++){
+                if(j * j == i) count++;
                 else if(i % j == 0) count += 2;
             }
-            if(count % 2 == 0){
-                answer += i;
-            }else{
-                answer -= i;
-            }
+            answer += count % 2 == 0 ? i : -1 * i;
         }
         return answer;
     }
