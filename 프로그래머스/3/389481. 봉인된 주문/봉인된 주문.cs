@@ -27,7 +27,7 @@ public class Solution {
         long result = 0;
         foreach (char c in s)
         {
-            int val = c - 'a' + 1;  // a->1, b->2, ..., z->26
+            int val = c - 96;  // a->1, b->2, ..., z->26
             result = result * 26 + val;
         }
         return result;
