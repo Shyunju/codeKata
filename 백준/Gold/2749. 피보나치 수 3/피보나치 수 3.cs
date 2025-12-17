@@ -23,8 +23,8 @@ public class Program
             return;
         }
 
-        int a = 1; // F(1)
-        int b = 1; // F(2)
+        int a = 1; 
+        int b = 1;
         int c = 0;
 
         for (int i = 3; i <= reducedN; i++)
@@ -37,3 +37,4 @@ public class Program
         Console.WriteLine(b);
     }
 }
+
