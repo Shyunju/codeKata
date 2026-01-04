@@ -2,18 +2,22 @@ using System;
 using System.Collections.Generic;
 public class Solution {
     public bool solution(string s) {
-        Stack<char> stk = new Stack<char>();
-        foreach(char i in s)
+        Stack<char> a = new Stack<char>();
+        foreach(char c in s)
         {
-            if(i == '(')
+            if(c == ')')
             {
-                stk.Push(i);
-                continue;
+                if(a.Count < 1)
+                    return false;
+                char last = a.Pop();
+                if(last != '(')
+                    return false;
             }
-            if(stk.Count == 0)
-                return false;
-            stk.Pop();                
+            else
+                a.Push(c);
         }
-        return stk.Count > 0 ? false : true;
+        if(a.Count > 0)
+            return false;
+        return true;
     }
 }
