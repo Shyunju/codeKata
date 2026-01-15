@@ -13,13 +13,13 @@ public class Solution {
             info[lighthouse[i,0]].Add(lighthouse[i,1]);
             info[lighthouse[i,1]].Add(lighthouse[i,0]);
         }
-        dfs(1, 1, info, isLightOn, ref answer);
+        DFS(1, 1, info, isLightOn, ref answer);
         return answer;
     }
-    private void dfs(int node, int parent, Dictionary<int, List<int>> info, bool[] isLightOn, ref int answer){
+    private void DFS(int node, int parent, Dictionary<int, List<int>> info, bool[] isLightOn, ref int answer){
         for(int i = 0; i < info[node].Count; i++){
             if(info[node][i] != parent){
-                dfs(info[node][i], node, info, isLightOn, ref answer);
+                DFS(info[node][i], node, info, isLightOn, ref answer);
                 
                 if(!isLightOn[info[node][i]] && !isLightOn[node]){
                     isLightOn[node] = true;
