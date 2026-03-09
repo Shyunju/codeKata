@@ -10,7 +10,7 @@ public class Program
         bool[] nums = new bool[n+1];
         
         nums[0] = true;
-        nums[1] = true; //true면 소수. 단, 0과 1을 제외
+        nums[1] = true; 
         int answer = 0;
         
         for(int i = 2; i <= n; i++)
@@ -23,7 +23,7 @@ public class Program
                 Console.WriteLine(i);
                 return;
             }
-            for(int j = 2 * i; j <= n; j += i)
+            for(int j = i * i; j <= n; j += i)
             {
                 if(!nums[j])
                 {
