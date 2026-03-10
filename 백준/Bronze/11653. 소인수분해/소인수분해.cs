@@ -1,24 +1,27 @@
 using System;
-
+using System.Collections.Generic;
 public class Program
 {
     static void Main(string[] args)
     {
+        Program p = new Program();
         int n = int.Parse(Console.ReadLine());
-        int sqrt = (int)Math.Sqrt(n);
-        
-        int d = 2;
-        while(d <= sqrt)
+        int i = 2;
+        while(n > 1)
         {
-            if(n % d != 0)
+            if(i*i > n)
             {
-                d++;
-            }else{
-                Console.WriteLine(d);
-                n /= d;
+                Console.WriteLine(n);
+                break;
             }
+            if(n % i == 0)
+            {
+                Console.WriteLine(i);
+                n /= i;
+                
+                continue;
+            }
+            i++;
         }
-        if(n > 1)
-            Console.WriteLine(n);
     }
 }
