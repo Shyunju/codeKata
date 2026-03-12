@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text;
 public class Program
 {
@@ -7,20 +8,25 @@ public class Program
     {
         Program p = new Program();
         int n = int.Parse(Console.ReadLine());
-        int[] num = new int[n];
+        List<int> num = new List<int>();
         string[] sl = Console.ReadLine().Split();
+        
         for(int i = 0; i < n; i++)
         {
-            num[i] = int.Parse(sl[i]);
+            num.Add(int.Parse(sl[i]));
         }
-        Array.Sort(num);
+        num.Sort();
         int m = int.Parse(Console.ReadLine());
         string[] input = Console.ReadLine().Split();
         StringBuilder sb = new StringBuilder(); // 출력을 모으기 위한 도구
 
         for(int i = 0; i < m; i++)
         {
-            sb.AppendLine(p.solve(int.Parse(input[i]), num).ToString());
+            if(num.BinarySearch(int.Parse(input[i])) >= 0)
+                sb.AppendLine(1.ToString());
+            else
+                sb.AppendLine(0.ToString());
+            //sb.AppendLine(p.solve(int.Parse(input[i]), num).ToString());
         }
 
         Console.Write(sb.ToString());
