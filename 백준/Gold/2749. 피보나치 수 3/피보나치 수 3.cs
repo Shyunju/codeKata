@@ -9,7 +9,6 @@ public class Program
         const int MOD = 1000000;
         const int PISANO = 1500000;
 
-        // 피사노 주기를 이용해 n을 줄임
         int reducedN = (int)(n % PISANO);
 
         if (reducedN == 0)
@@ -37,4 +36,5 @@ public class Program
         Console.WriteLine(b);
     }
 }
+
 
