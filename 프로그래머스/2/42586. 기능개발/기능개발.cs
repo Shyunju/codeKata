@@ -21,7 +21,9 @@ public class Solution {
                 answer.Add(count);
                 count = 1;
                 day = days[i];
-            }else{
+            }
+            else
+            {
                 count++;
                 continue;
             }
