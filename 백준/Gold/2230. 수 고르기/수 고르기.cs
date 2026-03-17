@@ -16,22 +16,13 @@ public class Solution
         }
         list.Sort();
         int ans = int.MaxValue;
-        int st = 0;
         int en = 0;
-        while(st < n)
+        for(int st = 0; st < n; st++)
         {
-            if(list[en] - list[st] >= m)
-            {
-                ans = Math.Min(ans, list[en] - list[st]);
-                st++;
-            }
-            else
-            {
-                if(en < n-1)
-                    en++;
-                else
-                    st++;
-            }
+            while(en < n && list[en] - list[st] < m)
+                en++;
+            if(en == n) break;
+            ans = Math.Min(ans, list[en] - list[st]);
         }
         Console.Write(ans);
         
