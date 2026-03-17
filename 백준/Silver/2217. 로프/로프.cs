@@ -1,22 +1,23 @@
 using System;
-namespace 백준
+using System.Collections.Generic;
+
+public class Program
 {
-    internal class Program
-    {            
-        static void Main(string[] args)
-        {            
-            int n = int.Parse(Console.ReadLine());
-            int[] w = new int[n];
-            for(int i = 0; i < n; i++){
-                int weight = int.Parse(Console.ReadLine());
-                w[i] = weight;
-            } 
-            Array.Sort(w);
-            int answer = 0;
-            for(int j = 1; j <= n; j++){
-                answer = Math.Max(answer, w[n - j] * j);
-            }
-            Console.WriteLine(answer);            
+    static void Main(string[] args)
+    {
+        Program p = new Program();
+        int n = int.Parse(Console.ReadLine());
+        List<int> w = new List<int>();
+        for(int i= 0; i <n; i++)
+        {
+            w.Add(int.Parse(Console.ReadLine()));
         }
+        w.Sort();
+        int max = 0;
+        for(int i =1; i <= n; i++)
+        {
+            max = Math.Max(max, w[n-i]*i);
+        }
+        Console.Write(max);
     }
 }
