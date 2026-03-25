@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-
+using System.Text;
 internal class Program
 {
     static void Main(string[] args){
@@ -20,7 +20,10 @@ internal class Program
             if(num < x)
                 answer.Add(num);
         }
+        StringBuilder sb = new StringBuilder();
         for(int i = 0; i < answer.Count(); i++)
-            Console.Write(answer[i] + " ");
+            sb.Append(answer[i] + " ");
+        
+        Console.Write(sb.ToString());
     }
 }
