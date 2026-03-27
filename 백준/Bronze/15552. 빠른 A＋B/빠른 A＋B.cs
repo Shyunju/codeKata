@@ -15,7 +15,7 @@ namespace _04_FastAddition {
                     builder.Append((a + b) + "\n");
                 }
             }
-            Console.WriteLine(builder);
+            Console.WriteLine(builder.ToString());
         }
     }
 }
