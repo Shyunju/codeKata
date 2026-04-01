@@ -16,8 +16,7 @@ internal class Program
         int a = 0;
         int b = 0;
         for(int i = 0; i < m; i++){
-            s = Console.ReadLine();
-            string[] order = s.Split(" ");
+            string[] order = Console.ReadLine().Split();
             a = int.Parse(order[0]);
             b = int.Parse(order[1]);
             
