@@ -28,8 +28,7 @@ internal class Program
         {
             for (int j = 0; j <= 100; j++)
             {
-                if (white[i, j])
-                    answer++;
+                if (white[i, j])    answer++;
             }
         }
 
