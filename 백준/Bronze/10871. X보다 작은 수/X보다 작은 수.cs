@@ -4,16 +4,14 @@ using System.Text;
 internal class Program
 {
     static void Main(string[] args){
-        string s1 = Console.ReadLine();
-        string[] sl1 = s1.Split();
+        string[] sl = Console.ReadLine().Split();
         
-        int n = int.Parse(sl1[0]);
-        int x = int.Parse(sl1[1]);
+        int n = int.Parse(sl[0]);
+        int x = int.Parse(sl[1]);
         
         List<int> answer = new List<int>();
         
-        string s2 = Console.ReadLine();
-        string[] sl2 = s2.Split();
+        string[] sl2 = Console.ReadLine().Split();
         
         for(int i = 0; i< n; i++){
             int num = int.Parse(sl2[i]);
