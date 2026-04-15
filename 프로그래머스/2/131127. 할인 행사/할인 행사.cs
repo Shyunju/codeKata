@@ -21,7 +21,8 @@ public class Solution {
         }
         
 
-        if (IsMatch()) answer++;
+        if (IsMatch()) 
+            answer++;
 
         for (int i = 1; i <= discount.Length - 10; i++) 
         {
@@ -33,7 +34,8 @@ public class Solution {
             string inItem = discount[i + 9];
             currentDict[inItem] = currentDict.GetValueOrDefault(inItem, 0) + 1;
 
-            if (IsMatch()) answer++;
+            if (IsMatch()) 
+                answer++;
         }
 
         return answer;
@@ -42,7 +44,8 @@ public class Solution {
     {
         foreach (var pair in wantDict) 
         {
-            if (currentDict.GetValueOrDefault(pair.Key, 0) != pair.Value) return false;
+            if (currentDict.GetValueOrDefault(pair.Key, 0) != pair.Value) 
+                return false;
         }
         return true;
     }
