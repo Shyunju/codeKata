@@ -6,7 +6,7 @@ public class Solution {
         {
             sum += arr[i];
         }
-        answer = sum / arr.Length;
-        return answer;
+        return sum / arr.Length;
+      
     }
 }
