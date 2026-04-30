@@ -13,7 +13,7 @@ public class Solution {
         ten = ten / 10;
         while( n != 0){
             answer += n / ten;
-            n = n % ten;
+            n %= ten;
             ten = ten / 10;
         }
         
