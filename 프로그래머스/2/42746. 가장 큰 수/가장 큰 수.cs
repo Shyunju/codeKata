@@ -14,13 +14,11 @@ public class Solution
             Dictionary<int, string> number_dic = new Dictionary<int, string>();
 
             for (int i = 0; i < numbers.Length; ++i)
-            {
-                
-
+            {              
                 string num_str = numbers[i].ToString();
                 while (num_str.Length < max_length)
                 {
-                    num_str = num_str + num_str;
+                    num_str += num_str;
                 }
                 if (num_str.Length > max_length)
                 {
