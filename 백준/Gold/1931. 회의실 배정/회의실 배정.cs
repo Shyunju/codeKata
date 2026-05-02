@@ -34,11 +34,14 @@ public class Program
     {
         if(x.end == y.end)
         {
-            if(x.start < y.start) return -1;
+            if(x.start < y.start) 
+                return -1;
             return 1;
-        }else
+        }
+        else
         {
-            if(x.end < y.end) return -1;
+            if(x.end < y.end) 
+                return -1;
             return 1;
         }
     }
