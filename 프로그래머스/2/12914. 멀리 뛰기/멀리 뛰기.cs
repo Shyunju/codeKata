@@ -1,6 +1,6 @@
 using System;
 public class Solution {
-    public int solution(int n) {
+    public long solution(int n) {
         int answer = 0;
         if(n <= 3)
             return n;
@@ -14,7 +14,7 @@ public class Solution {
             
             dp1 = dp2;
             dp2 = answer;
-            --n;
+            n--;
         }
         
         return answer;
