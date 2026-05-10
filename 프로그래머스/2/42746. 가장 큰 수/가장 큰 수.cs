@@ -10,7 +10,7 @@ public class Solution
         {
             int max_length = MAX.ToString().Length;
 
-            StringBuilder string_builder = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             Dictionary<int, string> number_dic = new Dictionary<int, string>();
 
             for (int i = 0; i < numbers.Length; ++i)
@@ -32,15 +32,15 @@ public class Solution
 
             foreach (var key_value in result_dic)
             {
-                string_builder.Append(numbers[key_value.Key]);
+                sb.Append(numbers[key_value.Key]);
             }
 
-            if (string_builder[0] == '0')
+            if (sb[0] == '0')
             {
-                string_builder.Clear();
-                string_builder.Append("0");
+                sb.Clear();
+                sb.Append("0");
             }
 
-            return string_builder.ToString();
+            return sb.ToString();
         }
 }
