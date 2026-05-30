@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 public class Solution {
-    public int[] solution(string[] genres, int[] plays) {
+    public int[] solution(string[] genres, int[] plays) 
+    {
         var zipList = Enumerable.Range(0, genres.Length)
             .Select(s => new{index = s, genre = genres[s], play = plays[s]})
             .ToList();
@@ -17,8 +18,10 @@ public class Solution {
             .Select(s => s.OrderByDescending(t => t.play).Take(2));
         
         var list = new List<int>();
-        foreach(var i in topTwo){
-            foreach(var member in i){
+        foreach(var i in topTwo)
+        {
+            foreach(var member in i)
+            {
                 list.Add(member.index);
             }
         }
