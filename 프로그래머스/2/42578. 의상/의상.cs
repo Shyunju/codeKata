@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 
-public class Solution {
-    public int solution(string[,] clothes) {
+public class Solution 
+{
+    public int solution(string[,] clothes) 
+    {
         int answer = 1;
         Dictionary<string, int> dic = new Dictionary<string, int>();
         
